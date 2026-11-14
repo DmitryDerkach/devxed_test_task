@@ -187,14 +187,14 @@ Shipment `10 × 6 × 5`, weight 3 (Max 10, Mid 6, Min 5). The catalog:
 
 | Packaging | Cost | Available | Max weight | Check | Result |
 |---|:-:|:-:|:-:|---|---|
-| **Bag-S** · bag 12 × 8 × 1 | 1.00 | yes | 5 | weight 3 ≤ 5 ✓ · Max + Min = 10 + 5 = 15 ≤ 12 ✗ | ❌ dimensions |
-| **Box-XS** · 10 × 6 × 5 | 0.80 | **no** | 5 | not checked further | ❌ unavailable |
-| **Box-S** · 10 × 6 × 4.5 | 2.00 | yes | 5 | 10 ≥ 10 ✓ · 6 ≥ 6 ✓ · 4.5 ≥ 5 ✗ | ❌ dimensions |
-| **Box-W** · 12 × 8 × 6 | 2.50 | yes | **2.5** | weight 3 ≤ 2.5 ✗ | ❌ weight |
-| **Box-M** · 10 × 6 × 5 | 3.00 | yes | 5 | 10 ≥ 10 ✓ · 6 ≥ 6 ✓ · 5 ≥ 5 ✓ | ✅ |
-| **Box-L** · 20 × 20 × 20 | 4.00 | yes | 10 | all ✓ | ✅ |
+| **Bag 1** · bag 12 × 8 × 1 | 1.00 | yes | 5 | weight 3 ≤ 5 ✓ · Max + Min = 10 + 5 = 15 ≤ 12 ✗ | ❌ dimensions |
+| **Box 1** · 10 × 6 × 5 | 0.80 | **no** | 5 | not checked further | ❌ unavailable |
+| **Box 2** · 10 × 6 × 4.5 | 2.00 | yes | 5 | 10 ≥ 10 ✓ · 6 ≥ 6 ✓ · 4.5 ≥ 5 ✗ | ❌ dimensions |
+| **Box 3** · 12 × 8 × 6 | 2.50 | yes | **2.5** | weight 3 ≤ 2.5 ✗ | ❌ weight |
+| **Box 4** · 10 × 6 × 5 | 3.00 | yes | 5 | 10 ≥ 10 ✓ · 6 ≥ 6 ✓ · 5 ≥ 5 ✓ | ✅ |
+| **Box 5** · 20 × 20 × 20 | 4.00 | yes | 10 | all ✓ | ✅ |
 
-**Result: Box-M (3.00).** Every cheaper option dropped out for a *different* reason (dimensions, availability, weight). This is exactly the decision-table idea the checklist is built on.
+**Result: Box 4 (3.00).** Every cheaper option dropped out for a *different* reason (dimensions, availability, weight). This is exactly the decision-table idea the checklist is built on.
 
 ---
 

@@ -142,41 +142,61 @@ Prefer to run one part by hand, open the Postman collection in the Postman app, 
 
 ## 🤖 How it was built (AI-DLC)
 
-Instead of the classic STLC (*requirements → planning → design → execution → closure*, one long hand-made pass), the work followed the **AI-Driven Development Life Cycle (AI-DLC)** idea: an AI agent does the heavy lifting in short iterations, and a human owns every decision at explicit checkpoints. The agent was Claude Code, the human was the author of this repository.
+Instead of the classic STLC (*requirements → planning → design → execution → closure*, one long hand-made pass), the work followed the **AI-Driven Development Life Cycle (AI-DLC)**. Its core idea: **the human owns the intent, every decision and every gate; the AI agent executes in short iterations between those gates.** Here the human is the author of this repository (QA engineer, in the roles of product owner, test lead and reviewer), and the agent is Claude Code.
 
 ```mermaid
 flowchart LR
+    H0{{"👤 Intent<br/>scope, structure,<br/>definition of done"}} --> A1
     subgraph I["① Inception"]
         direction TB
-        I1["AI reads the spec,<br/>lists every gap"] --> I2{{"Human:<br/>accept / change<br/>assumptions"}}
+        A1["🤖 read the spec,<br/>list every gap"] --> H1{{"👤 Gate 1<br/>decide each<br/>assumption"}}
     end
     subgraph C["② Construction"]
         direction TB
-        C1["AI drafts checklist<br/>(EP · BVA · DT · EG)"] --> C2["AI derives test cases<br/>+ automation + Postman"]
-        C2 --> C3{{"Human review:<br/>wording, scope,<br/>expected results"}}
-        C3 -- "rework" --> C1
+        A2["🤖 draft checklist,<br/>test cases, automation"] --> H2{{"👤 Gate 2<br/>review every artefact,<br/>reject / rework"}}
+        H2 -- "rework" --> A2
     end
     subgraph O["③ Operations"]
         direction TB
-        O1["mutation check:<br/>do the tests catch bugs?"] --> O2["one-command run<br/>+ CI on every push"]
+        A3["🤖 mutation check,<br/>one-command run, CI"] --> H3{{"👤 Gate 3<br/>approve release,<br/>verify as a reviewer"}}
     end
-    I --> C --> O
+    H1 --> A2
+    H2 -- "approved" --> A3
+    H3 --> P(["🚀 published"])
 
     classDef ai fill:#eef3f9,stroke:#5b7fa6,color:#1a1a1a
-    classDef human fill:#fff6d6,stroke:#c9a227,color:#1a1a1a
-    classDef ops fill:#d9f2e6,stroke:#2f9e73,color:#1a1a1a
-    class I1,C1,C2 ai
-    class I2,C3 human
-    class O1,O2 ops
+    classDef human fill:#fff6d6,stroke:#c9a227,color:#1a1a1a,font-weight:bold
+    classDef done fill:#d9f2e6,stroke:#2f9e73,color:#1a1a1a
+    class A1,A2,A3 ai
+    class H0,H1,H2,H3 human
+    class P done
 ```
 
-| AI-DLC phase | What happened here | Where to see it |
-|---|---|---|
-| **① Inception**: intent → questions → decisions | The spec was read line by line; every place where two testers could expect different results became an open question with a proposed answer. The human accepted or changed each one. | *Assumptions* sheet of each checklist |
-| **② Construction**: short build/review loops (“bolts”) | Checklist first (the real deliverable), then test cases and automation **derived from the same scenarios**, so they cannot disagree. Human review drove several rework loops, e.g. neutral packaging names, a precondition step instead of “request is prepared”, expected results written out with full arithmetic, and no invented response texts. | `Checklist_EN.*`, `Additional/Test cases/` |
-| **③ Operations**: prove it, keep it green | 33 deliberately broken versions of the code (`>` instead of `≥`, gift cards discounted, threshold after discount …) must each be caught by the suite, otherwise the checklist is not sharp enough. One-command run + CI on Linux and Windows. | `Additional/Automation/`, `run-all.*`, Actions tab |
+### 👤 What the human decided
 
-**Why it matters for QA:** the AI made breadth cheap (every boundary, every combination, two languages, executable proof), while the human kept the parts that need judgement: what the spec *means*, which risks matter, and what a good test case reads like.
+| Gate | Decision | Effect on the result |
+|---|---|---|
+| **Intent** | No questions to an analyst: the task explicitly allows own assumptions, so every gap is closed by a stated assumption instead | the *Assumptions* sheets, referenced from each affected check |
+| **Intent** | The checklist is the deliverable; test cases, automation and Postman are optional extras | the `Task N/` vs `Task N/Additional/` split of this repository |
+| **Gate 1** | Approved the reading of the ambiguous rules, incl. the two that change the most expected results: free-shipping threshold checked **before** the discount, and *digital + gift card* is **not** “digital only” | Task 2 assumptions #6 and #7, checks `PC-11`, `PC-15` |
+| **Gate 1** | Required the bag formula to be explained **with pictures and numbers**, step by step, and clearly marked as an explanation, not part of the spec | the 8 diagrams in the [Task 1 README](Task%201/README.md#3-the-rules-explained-with-pictures) |
+| **Gate 2** | Rejected the first version of the test cases: internal names like `Box-Next`, `Box-Limit` are not in the spec → **neutral names** (`Box 1`, `Bag 1`) everywhere, checklist included | all test cases and checklists |
+| **Gate 2** | Rejected “Request is prepared” as a step: step 1 is a **precondition** with expected result “–” | the step layout of all 96 test cases |
+| **Gate 2** | Rejected invented response texts (`'Promo code applied successfully'`): the spec does not define them, so test cases must not prescribe them | Task 2 expected results |
+| **Gate 2** | Required expected results to be written out **in full**, with the arithmetic | every *Expected Result* cell |
+| **Gate 2** | Trimmed the Azure DevOps layout (no *Comments / Area Path / Assigned To / State*) and renamed the columns | both `TestCases_*.xlsx` |
+| **Gate 3** | Chose *script + CI* over Docker after comparing the options; defined the repository structure and the README standard | `run-all.*`, `.github/workflows/ci.yml`, this README |
+| **Gate 3** | Reviewed the repository before publishing, then cloned it as an ordinary reviewer and ran it | this release |
+
+### 🤖 What the AI did
+
+| Phase | Work | Where to see it |
+|---|---|---|
+| **① Inception** | Read the spec line by line and turned every place where two testers could expect different results into an open question with a proposed answer | *Assumptions* sheets |
+| **② Construction** | Drafted 65 checks with EP · BVA · decision tables · pairwise · error guessing; derived 96 test cases, the Java tests and the Postman collection **from the same scenarios**, so they cannot disagree; redid them after each review | `Checklist_EN.*`, `Additional/` |
+| **③ Operations** | Wrote 33 deliberately broken versions of the code (`>` instead of `≥`, gift cards discounted, threshold after discount …) that the suite must catch; built the one-command run and the CI on Linux and Windows | `Additional/Automation/`, `run-all.*`, Actions tab |
+
+**Why it matters for QA:** the AI made breadth cheap (every boundary, every combination, two languages, executable proof). The human kept everything that needs judgement: what the spec *means*, which risks matter, what a good test case reads like, and when the work is good enough to ship.
 
 ---
 

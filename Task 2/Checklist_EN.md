@@ -5,7 +5,7 @@ Checklist for the **business logic of the promo-code endpoint**: gift cards excl
 > **34 checks** · 🔴 High: **18** · 🟠 Medium: **12** · 🟢 Low: **4**  
 > The same content as `Checklist_EN.xlsx` (sheets *Checklist*, *Assumptions*, *Techniques*), rendered for reading on GitHub.
 
-**Contents:** [Discount and totals](#discount-and-totals) · [gift_card](#giftcard) · [Shipping](#shipping) · [Promo code](#promo-code) · [Cart items](#cart-items) · [Contract and robustness](#contract-and-robustness) · [Assumptions](#assumptions) · [Test-design techniques](#test-design-techniques)
+**Contents:** [Discount and totals](#discount-and-totals) · [gift_card](#gift_card) · [Shipping](#shipping) · [Promo code](#promo-code) · [Cart items](#cart-items) · [Contract and robustness](#contract-and-robustness) · [Assumptions](#assumptions) · [Test-design techniques](#test-design-techniques)
 
 | Area | Checks | IDs |
 |---|:-:|---|
