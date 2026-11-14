@@ -180,11 +180,10 @@ flowchart LR
 | **Intent** | The checklist is the deliverable; test cases, automation and Postman are optional extras | the `Task N/` vs `Task N/Additional/` split of this repository |
 | **Gate 1** | Approved the reading of the ambiguous rules, incl. the two that change the most expected results: free-shipping threshold checked **before** the discount, and *digital + gift card* is **not** “digital only” | Task 2 assumptions #6 and #7, checks `PC-11`, `PC-15` |
 | **Gate 1** | Required the bag formula to be explained **with pictures and numbers**, step by step, and clearly marked as an explanation, not part of the spec | the 8 diagrams in the [Task 1 README](Task%201/README.md#3-the-rules-explained-with-pictures) |
-| **Gate 2** | Rejected the first version of the test cases: internal names like `Box-Next`, `Box-Limit` are not in the spec → **neutral names** (`Box 1`, `Bag 1`) everywhere, checklist included | all test cases and checklists |
+| **Gate 2** | Required every artefact to work **only with the facts given in the spec**: no invented names, values or behaviour presented as if they came from the task; anything added is a stated assumption | all test cases and checklists |
 | **Gate 2** | Rejected “Request is prepared” as a step: step 1 is a **precondition** with expected result “–” | the step layout of all 96 test cases |
 | **Gate 2** | Rejected invented response texts (`'Promo code applied successfully'`): the spec does not define them, so test cases must not prescribe them | Task 2 expected results |
 | **Gate 2** | Required expected results to be written out **in full**, with the arithmetic | every *Expected Result* cell |
-| **Gate 2** | Trimmed the Azure DevOps layout (no *Comments / Area Path / Assigned To / State*) and renamed the columns | both `TestCases_*.xlsx` |
 | **Gate 3** | Chose *script + CI* over Docker after comparing the options; defined the repository structure and the README standard | `run-all.*`, `.github/workflows/ci.yml`, this README |
 | **Gate 3** | Reviewed the repository before publishing, then cloned it as an ordinary reviewer and ran it | this release |
 
