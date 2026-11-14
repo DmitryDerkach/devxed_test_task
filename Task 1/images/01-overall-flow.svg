@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 786" width="672" height="786" role="img" aria-label="Packaging selection algorithm - overall flow">
+<style>
+  .bg { fill: #ffffff; stroke: #d0d7de; stroke-width: 1; }
+  .nd { fill: #eef3f9; stroke: #5b7fa6; stroke-width: 1.5; }
+  .dm { fill: #fff6d6; stroke: #c9a227; stroke-width: 1.5; }
+  .ok { fill: #d9f2e6; stroke: #2f9e73; stroke-width: 1.5; }
+  .no { fill: #fde2e2; stroke: #d9534f; stroke-width: 1.5; }
+  .ar { stroke: #445; stroke-width: 1.5; fill: none; }
+  text { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+  .t  { font-size: 12px; text-anchor: middle; dominant-baseline: middle; fill: #1a1a1a; }
+  .ts { font-size: 10.5px; text-anchor: middle; dominant-baseline: middle; fill: #555; }
+  .tb { font-size: 12px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; fill: #1a1a1a; }
+  .lb { font-size: 11px; font-weight: bold; fill: #444; dominant-baseline: middle; }
+  .h  { font-size: 15px; font-weight: bold; fill: #1f3864; }
+</style>
+<rect class="bg" x="0.5" y="0.5" width="671" height="785" rx="12"/>
+<text class="h" x="20" y="28">Diagram 1 · How the algorithm picks a packaging</text>
+<g transform="translate(16,50)">
+  <defs><marker id="a1" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#445"/></marker></defs>
+
+  <rect class="nd" x="60" y="10" width="340" height="40" rx="8"/>
+  <text class="t" x="230" y="30">Order items (one or several)</text>
+  <line class="ar" x1="230" y1="50" x2="230" y2="74" marker-end="url(#a1)"/>
+
+  <rect class="nd" x="60" y="75" width="340" height="56" rx="8"/>
+  <text class="t" x="230" y="94">Shipment shape: length = max, width = max,</text>
+  <text class="t" x="230" y="113">thickness = sum, weight = sum</text>
+  <line class="ar" x1="230" y1="131" x2="230" y2="155" marker-end="url(#a1)"/>
+
+  <rect class="nd" x="60" y="156" width="340" height="40" rx="8"/>
+  <text class="t" x="230" y="176">Take the next packaging from the catalog</text>
+  <line class="ar" x1="230" y1="196" x2="230" y2="221" marker-end="url(#a1)"/>
+
+  <polygon class="dm" points="230,222 350,250 230,278 110,250"/>
+  <text class="t" x="230" y="250">Packaging available?</text>
+  <line class="ar" x1="230" y1="278" x2="230" y2="301" marker-end="url(#a1)"/>
+  <text class="lb" x="240" y="291" fill="#1f8a5b">Yes</text>
+
+  <polygon class="dm" points="230,302 350,330 230,358 110,330"/>
+  <text class="t" x="230" y="330">Weight ≤ max weight?</text>
+  <line class="ar" x1="230" y1="358" x2="230" y2="381" marker-end="url(#a1)"/>
+  <text class="lb" x="240" y="371" fill="#1f8a5b">Yes</text>
+
+  <rect class="nd" x="60" y="382" width="340" height="48" rx="8"/>
+  <text class="t" x="230" y="400">Dimension check depends on the type:</text>
+  <text class="t" x="230" y="418">box → diagram 2, bag → diagram 6</text>
+  <line class="ar" x1="230" y1="430" x2="230" y2="451" marker-end="url(#a1)"/>
+
+  <polygon class="dm" points="230,452 350,480 230,508 110,480"/>
+  <text class="t" x="230" y="480">Dimensions fit?</text>
+  <line class="ar" x1="230" y1="508" x2="230" y2="531" marker-end="url(#a1)"/>
+  <text class="lb" x="240" y="521" fill="#1f8a5b">Yes</text>
+
+  <rect class="ok" x="60" y="532" width="340" height="40" rx="8"/>
+  <text class="t" x="230" y="552">Suitable: add to the suitable list</text>
+
+  <path class="ar" d="M60,552 H30 V176 H58" marker-end="url(#a1)"/>
+  <text class="ts" transform="translate(16,364) rotate(-90)">more packagings left</text>
+
+  <line class="ar" x1="230" y1="572" x2="230" y2="595" marker-end="url(#a1)"/>
+  <text class="lb" x="240" y="585" fill="#444">catalog finished</text>
+
+  <rect class="nd" x="60" y="596" width="340" height="40" rx="8"/>
+  <text class="t" x="230" y="616">Pick the cheapest of the suitable ones</text>
+  <line class="ar" x1="230" y1="636" x2="230" y2="659" marker-end="url(#a1)"/>
+
+  <rect class="ok" x="60" y="660" width="340" height="46" rx="23"/>
+  <text class="t" x="230" y="677">Suggest it to the employee</text>
+  <text class="ts" x="230" y="694">(if nothing is suitable - report that nothing fits)</text>
+
+  <rect class="no" x="430" y="262" width="190" height="78" rx="8"/>
+  <text class="tb" x="525" y="284">Not suitable</text>
+  <text class="t" x="525" y="304">skip this packaging</text>
+  <text class="t" x="525" y="322">and take the next one</text>
+  <path class="ar" d="M350,250 H395 V285 H428" marker-end="url(#a1)"/>
+  <line class="ar" x1="350" y1="330" x2="428" y2="330" marker-end="url(#a1)"/>
+  <path class="ar" d="M350,480 H525 V342" marker-end="url(#a1)"/>
+  <path class="ar" d="M525,262 V176 H402" marker-end="url(#a1)"/>
+  <text class="lb" x="357" y="243" fill="#c0392b">No</text>
+  <text class="lb" x="357" y="323" fill="#c0392b">No</text>
+  <text class="lb" x="357" y="473" fill="#c0392b">No</text>
+</g>
+</svg>

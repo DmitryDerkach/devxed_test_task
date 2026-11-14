@@ -1,0 +1,2372 @@
+{
+  "info": {
+    "_postman_id": "11b4c21f-a613-5c6a-b500-9512ea40bc0e",
+    "name": "Task 2 - POST /api/apply-promo-code",
+    "description": "Generated from the same cases.json as the Java tests and the test-case spreadsheet. Start the reference service: ./mvnw compile exec:java (port 8080), or point baseUrl at a real environment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Discount and totals",
+      "item": [
+        {
+          "name": "PC-01.1 SAVE10 (10 %) on one physical item of 50.00: discount 5.00, free shipping, total 45.00",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 50.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(50.00, 0.001); });",
+                  "pm.test('discount = 5.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(5.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 45.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(45.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-01\nTechnique: EP\nPriority: High\n\nSAVE10 (10 %) на один физический товар за 50.00: скидка 5.00, бесплатная доставка, итого 45.00"
+          }
+        },
+        {
+          "name": "PC-02.1 FLAT5 (fixed 5.00) on a 50.00 cart: discount 5.00, total 45.00",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 50.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(50.00, 0.001); });",
+                  "pm.test('discount = 5.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(5.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 45.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(45.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"FLAT5\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-02\nTechnique: EP\nPriority: High\n\nFLAT5 (фиксированные 5.00) на корзину 50.00: скидка 5.00, итого 45.00"
+          }
+        },
+        {
+          "name": "PC-03.1 Quantity multiplies the price: 2 x 20.00 = 40.00, discount 4.00",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 40.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(40.00, 0.001); });",
+                  "pm.test('discount = 4.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(4.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 36.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(36.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 2,\n      \"price\": 20.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-03\nTechnique: EP\nPriority: High\n\nКоличество умножается на цену: 2 x 20.00 = 40.00, скидка 4.00"
+          }
+        },
+        {
+          "name": "PC-03.2 Several lines of different types: physical 20.00 + digital 30.00, discount 10 % of 50.00",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 50.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(50.00, 0.001); });",
+                  "pm.test('discount = 5.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(5.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 45.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(45.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 20.00\n    },\n    {\n      \"product_id\": \"SKU-2\",\n      \"product_type\": \"digital\",\n      \"count\": 1,\n      \"price\": 30.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-03\nTechnique: EP + Pairwise\nPriority: Medium\n\nНесколько позиций разных типов: физический 20.00 + цифровой 30.00, скидка 10 % от 50.00"
+          }
+        },
+        {
+          "name": "PC-04.1 Rounding: 10 % of 10.05 = 1.005 is rounded half-up to 1.01; shipping 4.99 is added after the discount",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 10.05', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(10.05, 0.001); });",
+                  "pm.test('discount = 1.01', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(1.01, 0.001); });",
+                  "pm.test('shipping = 4.99', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(4.99, 0.001); });",
+                  "pm.test('total = 14.03', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(14.03, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 10.05\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-04, PC-16\nTechnique: BVA + EG\nPriority: High\n\nОкругление: 10 % от 10.05 = 1.005 округляется половина вверх до 1.01; доставка 4.99 добавляется после скидки"
+          }
+        },
+        {
+          "name": "PC-04.2 Smallest price 0.01: 10 % = 0.001 rounds to 0.00, shipping 4.99",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 0.01', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(0.01, 0.001); });",
+                  "pm.test('discount = 0.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('shipping = 4.99', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(4.99, 0.001); });",
+                  "pm.test('total = 5.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(5.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 0.01\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-04, PC-26\nTechnique: BVA\nPriority: Medium\n\nМинимальная цена 0.01: 10 % = 0.001 округляется до 0.00, доставка 4.99"
+          }
+        },
+        {
+          "name": "PC-05.1 FLAT5 on a 3.00 cart: discount is capped at 3.00, total = shipping 4.99 (never negative)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 3.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(3.00, 0.001); });",
+                  "pm.test('discount = 3.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(3.00, 0.001); });",
+                  "pm.test('shipping = 4.99', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(4.99, 0.001); });",
+                  "pm.test('total = 4.99', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(4.99, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"FLAT5\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 3.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-05\nTechnique: BVA\nPriority: High\n\nFLAT5 на корзину 3.00: скидка ограничена 3.00, итого = доставка 4.99 (не уходит в минус)"
+          }
+        },
+        {
+          "name": "PC-32.1 Large cart: 100 physical lines of 1.00 (subtotal 100.00)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 100.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(100.00, 0.001); });",
+                  "pm.test('discount = 10.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(10.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 90.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(90.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-2\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-3\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-4\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-5\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-6\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-7\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-8\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-9\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-10\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-11\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-12\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-13\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-14\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-15\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-16\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-17\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-18\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-19\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-20\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-21\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-22\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-23\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-24\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-25\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-26\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-27\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-28\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-29\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-30\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-31\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-32\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-33\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-34\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-35\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-36\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-37\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-38\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-39\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-40\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-41\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-42\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-43\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-44\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-45\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-46\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-47\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-48\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-49\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-50\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-51\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-52\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-53\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-54\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-55\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-56\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-57\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-58\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-59\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-60\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-61\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-62\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-63\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-64\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-65\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-66\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-67\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-68\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-69\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-70\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-71\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-72\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-73\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-74\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-75\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-76\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-77\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-78\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-79\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-80\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-81\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-82\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-83\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-84\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-85\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-86\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-87\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-88\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-89\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-90\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-91\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-92\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-93\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-94\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-95\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-96\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-97\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-98\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-99\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    },\n    {\n      \"product_id\": \"SKU-100\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 1.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-32\nTechnique: EG\nPriority: Low\n\nБольшая корзина: 100 физических позиций по 1.00 (подытог 100.00)"
+          }
+        },
+        {
+          "name": "PC-33.1 Decimal precision: 3 x 0.10 = 0.30 (not 0.30000000000000004), discount 0.03",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 0.30', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(0.30, 0.001); });",
+                  "pm.test('discount = 0.03', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(0.03, 0.001); });",
+                  "pm.test('shipping = 4.99', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(4.99, 0.001); });",
+                  "pm.test('total = 5.26', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(5.26, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 3,\n      \"price\": 0.10\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-33\nTechnique: EG\nPriority: Medium\n\nТочность десятичных чисел: 3 x 0.10 = 0.30 (а не 0.30000000000000004), скидка 0.03"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. gift_card handling",
+      "item": [
+        {
+          "name": "PC-06.1 Mixed cart: physical 40.00 + gift card 50.00 - discount only from the physical part (4.00), subtotal 90.00",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 90.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(90.00, 0.001); });",
+                  "pm.test('discount = 4.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(4.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 86.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(86.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 40.00\n    },\n    {\n      \"product_id\": \"SKU-2\",\n      \"product_type\": \"gift_card\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-06\nTechnique: DT\nPriority: High\n\nСмешанная корзина: физический 40.00 + подарочная карта 50.00 - скидка только с физической части (4.00), подытог 90.00"
+          }
+        },
+        {
+          "name": "PC-07.1 Cart with a gift card only: promo code is not applicable (error, no amounts)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code is not applicable to the items in the cart\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"gift_card\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-07\nTechnique: DT\nPriority: High\n\nКорзина только из подарочной карты: промокод не применим (ошибка, без сумм)"
+          }
+        },
+        {
+          "name": "PC-08.1 Digital 20.00 + gift card 10.00: discount only on the digital part (2.00); not 'digital only', so shipping 4.99",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 30.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(30.00, 0.001); });",
+                  "pm.test('discount = 2.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(2.00, 0.001); });",
+                  "pm.test('shipping = 4.99', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(4.99, 0.001); });",
+                  "pm.test('total = 32.99', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(32.99, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"digital\",\n      \"count\": 1,\n      \"price\": 20.00\n    },\n    {\n      \"product_id\": \"SKU-2\",\n      \"product_type\": \"gift_card\",\n      \"count\": 1,\n      \"price\": 10.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-08, PC-15\nTechnique: DT + Pairwise\nPriority: Medium\n\nЦифровой 20.00 + подарочная карта 10.00: скидка только с цифровой части (2.00); это не «только цифровые», поэтому доставка 4.99"
+          }
+        },
+        {
+          "name": "PC-09.1 FLAT5 on physical 10.00 + gift card 30.00: full 5.00 discount, subtotal 40.00",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 40.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(40.00, 0.001); });",
+                  "pm.test('discount = 5.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(5.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 35.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(35.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"FLAT5\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 10.00\n    },\n    {\n      \"product_id\": \"SKU-2\",\n      \"product_type\": \"gift_card\",\n      \"count\": 1,\n      \"price\": 30.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-09, PC-02\nTechnique: DT + Pairwise\nPriority: High\n\nFLAT5 на физический 10.00 + подарочная карта 30.00: полная скидка 5.00, подытог 40.00"
+          }
+        },
+        {
+          "name": "PC-09.2 FLAT5 on physical 3.00 + gift card 40.00: discount is capped at the discountable 3.00 (not 5.00)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 43.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(43.00, 0.001); });",
+                  "pm.test('discount = 3.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(3.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 40.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(40.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"FLAT5\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 3.00\n    },\n    {\n      \"product_id\": \"SKU-2\",\n      \"product_type\": \"gift_card\",\n      \"count\": 1,\n      \"price\": 40.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-09\nTechnique: BVA + DT\nPriority: High\n\nFLAT5 на физический 3.00 + подарочная карта 40.00: скидка ограничена облагаемой частью 3.00 (а не 5.00)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Shipping",
+      "item": [
+        {
+          "name": "PC-10.1 Subtotal 34.99 (just below the threshold): shipping 4.99",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 34.99', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(34.99, 0.001); });",
+                  "pm.test('discount = 3.50', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(3.50, 0.001); });",
+                  "pm.test('shipping = 4.99', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(4.99, 0.001); });",
+                  "pm.test('total = 36.48', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(36.48, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 34.99\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-10, PC-16\nTechnique: BVA\nPriority: High\n\nПодытог 34.99 (чуть ниже порога): доставка 4.99"
+          }
+        },
+        {
+          "name": "PC-10.2 Subtotal exactly 35.00: free shipping, although the discounted amount (31.50) is below 35",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 35.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(35.00, 0.001); });",
+                  "pm.test('discount = 3.50', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(3.50, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 31.50', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(31.50, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 35.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-10, PC-11\nTechnique: BVA + DT\nPriority: High\n\nПодытог ровно 35.00: доставка бесплатна, хотя сумма после скидки (31.50) ниже 35"
+          }
+        },
+        {
+          "name": "PC-10.3 Subtotal 35.01 (just above the threshold): free shipping",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 35.01', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(35.01, 0.001); });",
+                  "pm.test('discount = 3.50', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(3.50, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 31.51', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(31.51, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 35.01\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-10\nTechnique: BVA\nPriority: High\n\nПодытог 35.01 (чуть выше порога): доставка бесплатна"
+          }
+        },
+        {
+          "name": "PC-11.1 FLAT5 on 36.00: subtotal passes the threshold, the discounted 31.00 does not matter - free shipping",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 36.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(36.00, 0.001); });",
+                  "pm.test('discount = 5.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(5.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 31.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(31.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"FLAT5\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 36.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-11\nTechnique: DT\nPriority: High\n\nFLAT5 на 36.00: подытог проходит порог, сумма после скидки 31.00 значения не имеет - доставка бесплатна"
+          }
+        },
+        {
+          "name": "PC-12.1 Digital-only cart of 10.00 (below the threshold): no shipping",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 10.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(10.00, 0.001); });",
+                  "pm.test('discount = 1.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(1.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 9.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(9.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"digital\",\n      \"count\": 1,\n      \"price\": 10.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-12\nTechnique: DT\nPriority: High\n\nКорзина только из цифровых товаров на 10.00 (ниже порога): доставки нет"
+          }
+        },
+        {
+          "name": "PC-13.1 Physical 10.00 + digital 10.00 (below the threshold): shipping 4.99 is charged",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 20.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(20.00, 0.001); });",
+                  "pm.test('discount = 2.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(2.00, 0.001); });",
+                  "pm.test('shipping = 4.99', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(4.99, 0.001); });",
+                  "pm.test('total = 22.99', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(22.99, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 10.00\n    },\n    {\n      \"product_id\": \"SKU-2\",\n      \"product_type\": \"digital\",\n      \"count\": 1,\n      \"price\": 10.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-13\nTechnique: DT + Pairwise\nPriority: Medium\n\nФизический 10.00 + цифровой 10.00 (ниже порога): доставка 4.99 взимается"
+          }
+        },
+        {
+          "name": "PC-14.1 Physical 10.00 + gift card 30.00: the gift card counts towards the threshold (subtotal 40.00), free shipping",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 40.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(40.00, 0.001); });",
+                  "pm.test('discount = 1.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(1.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 39.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(39.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 10.00\n    },\n    {\n      \"product_id\": \"SKU-2\",\n      \"product_type\": \"gift_card\",\n      \"count\": 1,\n      \"price\": 30.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-14\nTechnique: DT + Pairwise\nPriority: Medium\n\nФизический 10.00 + подарочная карта 30.00: карта учитывается в пороге (подытог 40.00), доставка бесплатна"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Promo code validation",
+      "item": [
+        {
+          "name": "PC-17.1 Unknown promo code: error, no amounts",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code is invalid\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"NOPE\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-17, PC-23\nTechnique: EP\nPriority: High\n\nНесуществующий промокод: ошибка, без сумм"
+          }
+        },
+        {
+          "name": "PC-18.1 Expired promo code (EXPIRED20): error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code has expired\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"EXPIRED20\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-18, PC-23\nTechnique: EP\nPriority: High\n\nПросроченный промокод (EXPIRED20): ошибка"
+          }
+        },
+        {
+          "name": "PC-19.1 Promo code with the usage limit reached (USEDUP): error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code usage limit has been reached\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"USEDUP\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-19, PC-23\nTechnique: EP\nPriority: High\n\nПромокод с исчерпанным лимитом использований (USEDUP): ошибка"
+          }
+        },
+        {
+          "name": "PC-20.1 Empty promo_code (\"\"): 'required' error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code is required\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-20\nTechnique: BVA + EG\nPriority: High\n\nПустой promo_code (\"\"): ошибка «обязателен»"
+          }
+        },
+        {
+          "name": "PC-20.2 Blank promo_code (only spaces): 'required' error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code is required\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"   \",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-20\nTechnique: EG\nPriority: High\n\npromo_code из одних пробелов: ошибка «обязателен»"
+          }
+        },
+        {
+          "name": "PC-20.3 promo_code is null: 'required' error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code is required\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": null,\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-20\nTechnique: EG\nPriority: Medium\n\npromo_code равен null: ошибка «обязателен»"
+          }
+        },
+        {
+          "name": "PC-20.4 promo_code field omitted: 'required' error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code is required\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-20\nTechnique: EG\nPriority: Medium\n\nПоле promo_code отсутствует: ошибка «обязателен»"
+          }
+        },
+        {
+          "name": "PC-21.1 Code with surrounding spaces and lower case (' save10 ') works like SAVE10",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 50.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(50.00, 0.001); });",
+                  "pm.test('discount = 5.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(5.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 45.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(45.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \" save10 \",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-21\nTechnique: EP + EG\nPriority: Medium\n\nКод с пробелами по краям и в нижнем регистре (' save10 ') работает как SAVE10"
+          }
+        },
+        {
+          "name": "PC-21.2 Mixed-case code ('Save10') works like SAVE10",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 50.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(50.00, 0.001); });",
+                  "pm.test('discount = 5.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(5.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 45.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(45.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"Save10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-21\nTechnique: EP\nPriority: Medium\n\nКод в смешанном регистре ('Save10') работает как SAVE10"
+          }
+        },
+        {
+          "name": "PC-22.1 Injection-like code (SAVE10';--): rejected as invalid, no server error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code is invalid\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10';--\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-22\nTechnique: EG\nPriority: Medium\n\nКод, похожий на инъекцию (SAVE10';--): отклоняется как несуществующий, без ошибки сервера"
+          }
+        },
+        {
+          "name": "PC-22.2 Code with an inner space ('SAVE 10'): invalid (only the outside is trimmed)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code is invalid\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE 10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-22\nTechnique: EG\nPriority: Low\n\nКод с пробелом внутри ('SAVE 10'): несуществующий (обрезаются только пробелы по краям)"
+          }
+        },
+        {
+          "name": "PC-22.3 1000-character code: rejected as invalid, no server error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code is invalid\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-22\nTechnique: EG\nPriority: Low\n\nКод из 1000 символов: отклоняется как несуществующий, без ошибки сервера"
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Cart items validation",
+      "item": [
+        {
+          "name": "PC-24.1 Empty items list: error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Cart must contain at least one item\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-24\nTechnique: BVA\nPriority: High\n\nПустой список items: ошибка"
+          }
+        },
+        {
+          "name": "PC-25.1 count = 0: error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Item count must be an integer between 1 and 999\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 0,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-25\nTechnique: BVA\nPriority: High\n\ncount = 0: ошибка"
+          }
+        },
+        {
+          "name": "PC-25.2 count = -1: error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Item count must be an integer between 1 and 999\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": -1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-25\nTechnique: BVA + EG\nPriority: Medium\n\ncount = -1: ошибка"
+          }
+        },
+        {
+          "name": "PC-25.3 count = 999 (upper boundary) is accepted",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 999.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(999.00, 0.001); });",
+                  "pm.test('discount = 99.90', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(99.90, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 899.10', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(899.10, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 999,\n      \"price\": 1.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-25\nTechnique: BVA\nPriority: High\n\ncount = 999 (верхняя граница) принимается"
+          }
+        },
+        {
+          "name": "PC-25.4 count = 1000 (just above the boundary): error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Item count must be an integer between 1 and 999\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1000,\n      \"price\": 1.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-25\nTechnique: BVA\nPriority: High\n\ncount = 1000 (сразу выше границы): ошибка"
+          }
+        },
+        {
+          "name": "PC-26.1 price = 0: error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Item price must be between 0.01 and 9999.99 with at most 2 decimal places\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 0\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-26\nTechnique: BVA\nPriority: High\n\nprice = 0: ошибка"
+          }
+        },
+        {
+          "name": "PC-26.2 price = -5.00: error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Item price must be between 0.01 and 9999.99 with at most 2 decimal places\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": -5.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-26\nTechnique: BVA + EG\nPriority: Medium\n\nprice = -5.00: ошибка"
+          }
+        },
+        {
+          "name": "PC-26.3 price with three decimals (10.001): error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Item price must be between 0.01 and 9999.99 with at most 2 decimal places\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 10.001\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-26\nTechnique: BVA + EG\nPriority: Medium\n\nprice с тремя знаками после запятой (10.001): ошибка"
+          }
+        },
+        {
+          "name": "PC-26.4 price = 9999.99 (upper boundary) is accepted; discount 999.999 rounds up to 1000.00",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 9999.99', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(9999.99, 0.001); });",
+                  "pm.test('discount = 1000.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(1000.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 8999.99', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(8999.99, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 9999.99\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-26\nTechnique: BVA\nPriority: High\n\nprice = 9999.99 (верхняя граница) принимается; скидка 999.999 округляется вверх до 1000.00"
+          }
+        },
+        {
+          "name": "PC-26.5 price = 10000.00 (just above the boundary): error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Item price must be between 0.01 and 9999.99 with at most 2 decimal places\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 10000.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-26\nTechnique: BVA\nPriority: High\n\nprice = 10000.00 (сразу выше границы): ошибка"
+          }
+        },
+        {
+          "name": "PC-27.1 Unknown product_type ('service'): error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Product type must be one of: physical, digital, gift_card\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"service\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-27\nTechnique: EP\nPriority: Medium\n\nНеизвестный product_type ('service'): ошибка"
+          }
+        },
+        {
+          "name": "PC-27.2 product_type in the wrong case ('Physical'): error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Product type must be one of: physical, digital, gift_card\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"SKU-1\",\n      \"product_type\": \"Physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-27\nTechnique: EG\nPriority: Medium\n\nproduct_type в другом регистре ('Physical'): ошибка"
+          }
+        },
+        {
+          "name": "PC-28.1 Blank product_id: error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Product id is required\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"SAVE10\",\n  \"items\": [\n    {\n      \"product_id\": \"\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 50.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-28\nTechnique: EP\nPriority: Low\n\nПустой product_id: ошибка"
+          }
+        },
+        {
+          "name": "PC-29.1 Two lines with the same product_id are treated as separate lines (FLAT5 on 20.00 + 20.00)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Promo code applied successfully\"); });",
+                  "pm.test('subtotal = 40.00', function () { pm.expect(result.subtotal).to.be.a('number'); pm.expect(result.subtotal).to.be.closeTo(40.00, 0.001); });",
+                  "pm.test('discount = 5.00', function () { pm.expect(result.discount).to.be.a('number'); pm.expect(result.discount).to.be.closeTo(5.00, 0.001); });",
+                  "pm.test('shipping = 0.00', function () { pm.expect(result.shipping).to.be.a('number'); pm.expect(result.shipping).to.be.closeTo(0.00, 0.001); });",
+                  "pm.test('total = 35.00', function () { pm.expect(result.total).to.be.a('number'); pm.expect(result.total).to.be.closeTo(35.00, 0.001); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"FLAT5\",\n  \"items\": [\n    {\n      \"product_id\": \"A\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 20.00\n    },\n    {\n      \"product_id\": \"A\",\n      \"product_type\": \"physical\",\n      \"count\": 1,\n      \"price\": 20.00\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-29\nTechnique: EG\nPriority: Low\n\nДве строки с одинаковым product_id считаются отдельными позициями (FLAT5 на 20.00 + 20.00)"
+          }
+        },
+        {
+          "name": "PC-34.1 Invalid cart and invalid code at once: the cart error is reported first",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 400', function () { pm.response.to.have.status(400); });",
+                  "pm.test('Content-Type is JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.match(/application\\/json/); });",
+                  "const result = pm.response.json().result;",
+                  "pm.test('message', function () { pm.expect(result.message).to.eql(\"Cart must contain at least one item\"); });",
+                  "pm.test('no amounts in an error response', function () { pm.expect(Object.keys(result)).to.not.include.members(['subtotal', 'discount', 'shipping', 'total']); });"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"promo_code\": \"NOPE\",\n  \"items\": []\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/apply-promo-code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "apply-promo-code"
+              ]
+            },
+            "description": "Check: PC-34\nTechnique: EG\nPriority: Low\n\nНекорректная корзина и некорректный код одновременно: сначала сообщается об ошибке корзины"
+          }
+        }
+      ]
+    }
+  ]
+}

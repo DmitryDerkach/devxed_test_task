@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 360" width="1280" height="360" role="img" aria-label="devxed_test_task - QA test assignment">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="0.55" stop-color="#1e3a8a"/>
+      <stop offset="1" stop-color="#0e7490"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset="1" stop-color="#a78bfa"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#ffffff" stroke-opacity="0.05"/>
+    </pattern>
+    <style>
+      text { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+      .title { font-size: 54px; font-weight: 800; fill: #ffffff; letter-spacing: -0.5px; }
+      .sub { font-size: 21px; fill: #cbd5e1; }
+      .card-t { font-size: 13px; font-weight: 700; fill: #67e8f9; letter-spacing: 1.5px; }
+      .card-h { font-size: 21px; font-weight: 700; fill: #ffffff; }
+      .card-s { font-size: 14px; fill: #cbd5e1; }
+      .num { font-size: 26px; font-weight: 800; fill: #ffffff; text-anchor: middle; }
+      .lbl { font-size: 12px; fill: #94a3b8; text-anchor: middle; letter-spacing: 0.5px; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="360" rx="18" fill="url(#bg)"/>
+  <rect width="1280" height="360" rx="18" fill="url(#grid)"/>
+  <circle cx="1180" cy="40" r="160" fill="#22d3ee" opacity="0.08"/>
+  <circle cx="90" cy="350" r="120" fill="#a78bfa" opacity="0.10"/>
+
+  <!-- title -->
+  <text class="title" x="60" y="92">devxed_test_task</text>
+  <rect x="62" y="108" width="300" height="5" rx="2.5" fill="url(#glow)"/>
+  <text class="sub" x="60" y="148">QA test assignment · checklists · test cases · automation · CI</text>
+
+  <!-- card: task 1 -->
+  <g transform="translate(60,176)">
+    <rect width="560" height="92" rx="14" fill="#ffffff" fill-opacity="0.08" stroke="#ffffff" stroke-opacity="0.18"/>
+    <g transform="translate(22,20)">
+      <path d="M26 2 L50 14 L50 40 L26 52 L2 40 L2 14 Z" fill="#f59e0b" fill-opacity="0.25" stroke="#fbbf24" stroke-width="2"/>
+      <path d="M2 14 L26 26 L50 14 M26 26 V52" fill="none" stroke="#fbbf24" stroke-width="2"/>
+    </g>
+    <text class="card-t" x="94" y="30">TASK 1 · ALGORITHM</text>
+    <text class="card-h" x="94" y="56">Cheapest suitable packaging</text>
+    <text class="card-s" x="94" y="77">box vs. bag rules · shipment shape · weight · tie-breaks</text>
+  </g>
+
+  <!-- card: task 2 -->
+  <g transform="translate(660,176)">
+    <rect width="560" height="92" rx="14" fill="#ffffff" fill-opacity="0.08" stroke="#ffffff" stroke-opacity="0.18"/>
+    <g transform="translate(22,20)">
+      <path d="M4 6 H28 L50 28 L28 50 L4 26 Z" fill="#a78bfa" fill-opacity="0.25" stroke="#c4b5fd" stroke-width="2" stroke-linejoin="round"/>
+      <circle cx="16" cy="18" r="4.5" fill="none" stroke="#c4b5fd" stroke-width="2"/>
+    </g>
+    <text class="card-t" x="94" y="30" style="fill:#c4b5fd">TASK 2 · REST API</text>
+    <text class="card-h" x="94" y="56">POST /api/apply-promo-code</text>
+    <text class="card-s" x="94" y="77">discount · gift cards · $4.99 / free shipping · validation</text>
+  </g>
+
+  <!-- stats -->
+  <g transform="translate(60,290)">
+    <g><text class="num" x="80" y="26">65</text><text class="lbl" x="80" y="46">CHECKS</text></g>
+    <g><text class="num" x="270" y="26">96</text><text class="lbl" x="270" y="46">TEST CASES</text></g>
+    <g><text class="num" x="460" y="26">153</text><text class="lbl" x="460" y="46">JAVA TESTS</text></g>
+    <g><text class="num" x="650" y="26">267</text><text class="lbl" x="650" y="46">POSTMAN ASSERTIONS</text></g>
+    <g><text class="num" x="840" y="26">33</text><text class="lbl" x="840" y="46">MUTANTS KILLED</text></g>
+    <g><text class="num" x="1030" y="26" style="fill:#4ade80">1</text><text class="lbl" x="1030" y="46">COMMAND TO RUN IT ALL</text></g>
+    <path d="M175 6 V44 M365 6 V44 M555 6 V44 M745 6 V44 M935 6 V44" stroke="#ffffff" stroke-opacity="0.15"/>
+  </g>
+</svg>

@@ -1,0 +1,2119 @@
+[
+  {
+    "group": "SHAPE",
+    "ref": [
+      "PK-01"
+    ],
+    "technique": "EP",
+    "priority": "High",
+    "title": {
+      "en": "Single item: shipment equals the item",
+      "ru": "Один предмет: отправление равно самому предмету"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 5,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Large",
+        "cost": 5,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          10,
+          5
+        ]
+      },
+      {
+        "name": "Box-Small",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          9,
+          5,
+          2
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Large"
+    },
+    "id": "PK-01.1"
+  },
+  {
+    "group": "SHAPE",
+    "ref": [
+      "PK-02"
+    ],
+    "technique": "BVA + EG",
+    "priority": "High",
+    "title": {
+      "en": "Two items: length and width are the maxima taken independently from different items",
+      "ru": "Два предмета: длина и ширина - максимумы, взятые независимо из разных предметов"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 5,
+        "width": 9,
+        "thickness": 1
+      },
+      {
+        "weight": 1,
+        "length": 12,
+        "width": 4,
+        "thickness": 1
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Short",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          12,
+          8.99,
+          2
+        ]
+      },
+      {
+        "name": "Box-Fit",
+        "cost": 2,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          12,
+          9,
+          2
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Fit"
+    },
+    "id": "PK-02.1"
+  },
+  {
+    "group": "SHAPE",
+    "ref": [
+      "PK-03"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "Two items: thickness is summed (3+2=5): exact-fit box accepted, box 0.01 thinner rejected",
+      "ru": "Два предмета: толщина суммируется (2+3=5): коробка впритык подходит, на 0.01 тоньше - нет"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 5,
+        "thickness": 2
+      },
+      {
+        "weight": 2,
+        "length": 8,
+        "width": 6,
+        "thickness": 3
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Thin",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          6,
+          4.99
+        ]
+      },
+      {
+        "name": "Box-Exact",
+        "cost": 2,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          6,
+          5
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Exact"
+    },
+    "id": "PK-03.1"
+  },
+  {
+    "group": "SHAPE",
+    "ref": [
+      "PK-03"
+    ],
+    "technique": "BVA",
+    "priority": "Medium",
+    "title": {
+      "en": "Two identical items: thickness doubles (2+2=4): box 4 accepted, box 3.99 rejected",
+      "ru": "Два одинаковых предмета: толщина удваивается (2+2=4): коробка 4 подходит, 3.99 - нет"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 5,
+        "thickness": 2
+      },
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 5,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Tight",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          5,
+          3.99
+        ]
+      },
+      {
+        "name": "Box-Ok",
+        "cost": 2,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          5,
+          4
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Ok"
+    },
+    "id": "PK-03.2"
+  },
+  {
+    "group": "SHAPE",
+    "ref": [
+      "PK-04"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "Two items: weight is summed (1+2=3): limit 3 accepted, limit 2.99 rejected",
+      "ru": "Два предмета: вес суммируется (1+2=3): лимит 3 подходит, лимит 2.99 - нет"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 5,
+        "thickness": 2
+      },
+      {
+        "weight": 2,
+        "length": 8,
+        "width": 6,
+        "thickness": 3
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Light",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 2.99,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      },
+      {
+        "name": "Box-Heavy",
+        "cost": 2,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 3,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Heavy"
+    },
+    "id": "PK-04.1"
+  },
+  {
+    "group": "SHAPE",
+    "ref": [
+      "PK-05"
+    ],
+    "technique": "EP + EG",
+    "priority": "Medium",
+    "title": {
+      "en": "Single item entered with width greater than length (dimension order is arbitrary)",
+      "ru": "Один предмет, у которого ширина больше длины (порядок размеров произвольный)"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 3,
+        "width": 10,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Exact",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          3,
+          2
+        ]
+      },
+      {
+        "name": "Box-Fallback",
+        "cost": 9,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          30,
+          30,
+          30
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Exact"
+    },
+    "id": "PK-05.1"
+  },
+  {
+    "group": "SHAPE",
+    "ref": [
+      "PK-06"
+    ],
+    "technique": "EG + BVA",
+    "priority": "Medium",
+    "title": {
+      "en": "50 items of 0.1 kg x 0.1 cm: decimal sums are exact (5.0), box with max 5 kg / 5 cm accepted",
+      "ru": "50 предметов по 0.1 кг и 0.1 см: суммы точные (5.0), коробка на 5 кг / 5 см подходит"
+    },
+    "items": [
+      {
+        "weight": 0.1,
+        "length": 10,
+        "width": 10,
+        "thickness": 0.1,
+        "repeat": 50
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Exact",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          10,
+          5
+        ]
+      },
+      {
+        "name": "Box-Big",
+        "cost": 9,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 10,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Exact"
+    },
+    "id": "PK-06.1"
+  },
+  {
+    "group": "FILTER",
+    "ref": [
+      "PK-07"
+    ],
+    "technique": "EP + DT",
+    "priority": "High",
+    "title": {
+      "en": "Cheapest packaging is unavailable: it is skipped even though the item fits",
+      "ru": "Самая дешёвая упаковка недоступна: она пропускается, хотя предмет в неё помещается"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 5,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Cheap",
+        "cost": 1,
+        "available": false,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          10,
+          5
+        ]
+      },
+      {
+        "name": "Box-Next",
+        "cost": 2,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          10,
+          5
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Next"
+    },
+    "id": "PK-07.1"
+  },
+  {
+    "group": "FILTER",
+    "ref": [
+      "PK-08"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "Item weight equals the packaging maximum weight: accepted",
+      "ru": "Вес предмета равен максимальному весу упаковки: подходит"
+    },
+    "items": [
+      {
+        "weight": 5,
+        "length": 10,
+        "width": 5,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Limit",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          10,
+          5
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Limit"
+    },
+    "id": "PK-08.1"
+  },
+  {
+    "group": "FILTER",
+    "ref": [
+      "PK-08"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "Item weight exceeds the maximum by 0.01: that packaging is rejected",
+      "ru": "Вес предмета больше максимума на 0.01: эта упаковка отклоняется"
+    },
+    "items": [
+      {
+        "weight": 5.01,
+        "length": 10,
+        "width": 5,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Light",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          10,
+          5
+        ]
+      },
+      {
+        "name": "Box-Heavy",
+        "cost": 2,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 6,
+        "dimensions": [
+          20,
+          10,
+          5
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Heavy"
+    },
+    "id": "PK-08.2"
+  },
+  {
+    "group": "FILTER",
+    "ref": [
+      "PK-09"
+    ],
+    "technique": "EP",
+    "priority": "Medium",
+    "title": {
+      "en": "All packagings are unavailable: no suitable packaging",
+      "ru": "Все упаковки недоступны: подходящей упаковки нет"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 5,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-A",
+        "cost": 1,
+        "available": false,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          10,
+          5
+        ]
+      },
+      {
+        "name": "Bag-B",
+        "cost": 2,
+        "available": false,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          10,
+          5
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "NONE"
+    },
+    "id": "PK-09.1"
+  },
+  {
+    "group": "FILTER",
+    "ref": [
+      "PK-09"
+    ],
+    "technique": "EG",
+    "priority": "Medium",
+    "title": {
+      "en": "Empty catalog: no suitable packaging (no error, no default)",
+      "ru": "Пустой каталог упаковок: подходящей упаковки нет (без ошибки и без значения по умолчанию)"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 5,
+        "thickness": 2
+      }
+    ],
+    "packagings": [],
+    "expected": {
+      "outcome": "NONE"
+    },
+    "id": "PK-09.2"
+  },
+  {
+    "group": "BOX",
+    "ref": [
+      "PK-10"
+    ],
+    "technique": "EP",
+    "priority": "Medium",
+    "title": {
+      "en": "Box clearly larger than the item in every dimension: fits",
+      "ru": "Коробка заметно больше предмета по всем размерам: подходит"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 4
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Big",
+        "cost": 3,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          10,
+          8
+        ]
+      },
+      {
+        "name": "Box-Small",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          9,
+          5,
+          3
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Big"
+    },
+    "id": "PK-10.1"
+  },
+  {
+    "group": "BOX",
+    "ref": [
+      "PK-11"
+    ],
+    "technique": "BVA (on-point)",
+    "priority": "High",
+    "title": {
+      "en": "Box equals the item in all three dimensions: fits (>= is inclusive)",
+      "ru": "Коробка равна предмету по всем трём размерам: подходит (сравнение нестрогое)"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 4
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Exact",
+        "cost": 2,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          6,
+          4
+        ]
+      },
+      {
+        "name": "Box-Big",
+        "cost": 5,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          10,
+          8
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Exact"
+    },
+    "id": "PK-11.1"
+  },
+  {
+    "group": "BOX",
+    "ref": [
+      "PK-11"
+    ],
+    "technique": "EG + BVA",
+    "priority": "Low",
+    "title": {
+      "en": "Cube item 5x5x5 (Max = Mid = Min) into a 5x5x5 box: fits",
+      "ru": "Предмет-куб 5x5x5 (Max = Mid = Min) в коробку 5x5x5: подходит"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 5,
+        "width": 5,
+        "thickness": 5
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Cube",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          5,
+          5,
+          5
+        ]
+      },
+      {
+        "name": "Box-Big",
+        "cost": 9,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Cube"
+    },
+    "id": "PK-11.2"
+  },
+  {
+    "group": "BOX",
+    "ref": [
+      "PK-12"
+    ],
+    "technique": "BVA (off-point)",
+    "priority": "High",
+    "title": {
+      "en": "Largest box dimension is 0.01 too short: does not fit",
+      "ru": "Наибольший размер коробки короче на 0.01: не подходит"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 4
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Short1",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          9.99,
+          6,
+          4
+        ]
+      },
+      {
+        "name": "Box-Fallback",
+        "cost": 9,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          6,
+          4
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Fallback"
+    },
+    "id": "PK-12.1"
+  },
+  {
+    "group": "BOX",
+    "ref": [
+      "PK-12"
+    ],
+    "technique": "BVA (off-point)",
+    "priority": "High",
+    "title": {
+      "en": "Middle box dimension is 0.01 too short: does not fit",
+      "ru": "Средний размер коробки короче на 0.01: не подходит"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 4
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Short2",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          5.99,
+          4
+        ]
+      },
+      {
+        "name": "Box-Fallback",
+        "cost": 9,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          6,
+          4
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Fallback"
+    },
+    "id": "PK-12.2"
+  },
+  {
+    "group": "BOX",
+    "ref": [
+      "PK-12"
+    ],
+    "technique": "BVA (off-point)",
+    "priority": "High",
+    "title": {
+      "en": "Smallest box dimension is 0.01 too short: does not fit",
+      "ru": "Наименьший размер коробки короче на 0.01: не подходит"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 4
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Short3",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          6,
+          3.99
+        ]
+      },
+      {
+        "name": "Box-Fallback",
+        "cost": 9,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          6,
+          4
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Fallback"
+    },
+    "id": "PK-12.3"
+  },
+  {
+    "group": "BOX",
+    "ref": [
+      "PK-13"
+    ],
+    "technique": "EP + EG",
+    "priority": "High",
+    "title": {
+      "en": "Box dimensions written in a different order (4, 10, 6) than the item's (10, 6, 4): fits after sorting",
+      "ru": "Размеры коробки записаны в другом порядке (4, 10, 6), чем у предмета (10, 6, 4): после сортировки подходит"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 4
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Reordered",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          4,
+          10,
+          6
+        ]
+      },
+      {
+        "name": "Box-Fallback",
+        "cost": 9,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          30,
+          30,
+          30
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Reordered"
+    },
+    "id": "PK-13.1"
+  },
+  {
+    "group": "BOX",
+    "ref": [
+      "PK-14"
+    ],
+    "technique": "EG",
+    "priority": "Medium",
+    "title": {
+      "en": "Long thin item 20x1x1: a 10x10x10 box has enough volume but is too short - rejected",
+      "ru": "Длинный тонкий предмет 20x1x1: коробка 10x10x10 вмещает по объёму, но коротка - отклоняется"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 20,
+        "width": 1,
+        "thickness": 1
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Cube",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          10,
+          10
+        ]
+      },
+      {
+        "name": "Box-Long",
+        "cost": 5,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          1,
+          1
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Long"
+    },
+    "id": "PK-14.1"
+  },
+  {
+    "group": "BAG",
+    "ref": [
+      "PK-15"
+    ],
+    "technique": "BVA (on-point)",
+    "priority": "High",
+    "title": {
+      "en": "Max+Min = length (12) and Mid+Min = width (8): fits",
+      "ru": "Max+Min = длине (12) и Mid+Min = ширине (8): подходит"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Bag-Exact",
+        "cost": 1,
+        "available": true,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          12,
+          8,
+          1
+        ]
+      },
+      {
+        "name": "Box-Fallback",
+        "cost": 9,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          30,
+          30,
+          30
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Bag-Exact"
+    },
+    "id": "PK-15.1"
+  },
+  {
+    "group": "BAG",
+    "ref": [
+      "PK-16"
+    ],
+    "technique": "BVA (off-point)",
+    "priority": "High",
+    "title": {
+      "en": "Max+Min exceeds the bag length by 0.01 (bag 11.99): does not fit",
+      "ru": "Max+Min больше длины пакета на 0.01 (пакет 11.99): не подходит"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Bag-Short",
+        "cost": 1,
+        "available": true,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          11.99,
+          8,
+          1
+        ]
+      },
+      {
+        "name": "Box-Fallback",
+        "cost": 9,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          30,
+          30,
+          30
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Fallback"
+    },
+    "id": "PK-16.1"
+  },
+  {
+    "group": "BAG",
+    "ref": [
+      "PK-16"
+    ],
+    "technique": "BVA (off-point)",
+    "priority": "High",
+    "title": {
+      "en": "Mid+Min exceeds the bag width by 0.01 (bag 7.99): does not fit",
+      "ru": "Mid+Min больше ширины пакета на 0.01 (пакет 7.99): не подходит"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Bag-Narrow",
+        "cost": 1,
+        "available": true,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          12,
+          7.99,
+          1
+        ]
+      },
+      {
+        "name": "Box-Fallback",
+        "cost": 9,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          30,
+          30,
+          30
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Fallback"
+    },
+    "id": "PK-16.2"
+  },
+  {
+    "group": "BAG",
+    "ref": [
+      "PK-17"
+    ],
+    "technique": "EP + DT",
+    "priority": "High",
+    "title": {
+      "en": "Flat wide item 30x20x0.5 fits a bag 31x21x5 but not a 25x25x25 box",
+      "ru": "Плоский широкий предмет 30x20x0.5 помещается в пакет 31x21x5, но не в коробку 25x25x25"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 30,
+        "width": 20,
+        "thickness": 0.5
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Cube",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          25,
+          25,
+          25
+        ]
+      },
+      {
+        "name": "Bag-Flat",
+        "cost": 2,
+        "available": true,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          31,
+          21,
+          5
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Bag-Flat"
+    },
+    "id": "PK-17.1"
+  },
+  {
+    "group": "BAG",
+    "ref": [
+      "PK-18"
+    ],
+    "technique": "EP + DT",
+    "priority": "Medium",
+    "title": {
+      "en": "Small thick item 5x5x5 fits a 10x10x3 bag (thinner than the item) but not a 4x4x4 box",
+      "ru": "Маленький толстый предмет 5x5x5 помещается в пакет 10x10x3 (тоньше предмета), но не в коробку 4x4x4"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 5,
+        "width": 5,
+        "thickness": 5
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Tiny",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          4,
+          4,
+          4
+        ]
+      },
+      {
+        "name": "Bag-Soft",
+        "cost": 2,
+        "available": true,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          10,
+          10,
+          3
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Bag-Soft"
+    },
+    "id": "PK-18.1"
+  },
+  {
+    "group": "BAG",
+    "ref": [
+      "PK-19"
+    ],
+    "technique": "EP + EG",
+    "priority": "Medium",
+    "title": {
+      "en": "Bag dimensions written unsorted (8, 1, 12): treated as 12 x 8 x 1 and fits",
+      "ru": "Размеры пакета записаны неупорядоченно (8, 1, 12): трактуются как 12 x 8 x 1, предмет помещается"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Bag-Unsorted",
+        "cost": 1,
+        "available": true,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          8,
+          1,
+          12
+        ]
+      },
+      {
+        "name": "Box-Fallback",
+        "cost": 9,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          30,
+          30,
+          30
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Bag-Unsorted"
+    },
+    "id": "PK-19.1"
+  },
+  {
+    "group": "BAG",
+    "ref": [
+      "PK-19"
+    ],
+    "technique": "EP + EG",
+    "priority": "Medium",
+    "title": {
+      "en": "Item entered as length 2, width 6, thickness 10 (unsorted): treated as 10 x 6 x 2 and fits a 12x8x1 bag",
+      "ru": "Предмет введён как длина 2, ширина 6, толщина 10 (неупорядоченно): трактуется как 10 x 6 x 2 и помещается в пакет 12x8x1"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 2,
+        "width": 6,
+        "thickness": 10
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Bag-Exact",
+        "cost": 1,
+        "available": true,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          12,
+          8,
+          1
+        ]
+      },
+      {
+        "name": "Box-Fallback",
+        "cost": 9,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          30,
+          30,
+          30
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Bag-Exact"
+    },
+    "id": "PK-19.2"
+  },
+  {
+    "group": "BAG",
+    "ref": [
+      "PK-20"
+    ],
+    "technique": "EG (spec reading)",
+    "priority": "Low",
+    "title": {
+      "en": "Bag thickness is not part of the check: a 12x8x0.1 bag still fits the 10x6x2 item",
+      "ru": "Толщина пакета не участвует в проверке: пакет 12x8x0.1 всё равно подходит для предмета 10x6x2"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Bag-Thin",
+        "cost": 1,
+        "available": true,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          12,
+          8,
+          0.1
+        ]
+      },
+      {
+        "name": "Box-Fallback",
+        "cost": 9,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          30,
+          30,
+          30
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Bag-Thin"
+    },
+    "id": "PK-20.1"
+  },
+  {
+    "group": "BAG",
+    "ref": [
+      "PK-21"
+    ],
+    "technique": "EP",
+    "priority": "Medium",
+    "title": {
+      "en": "Item 40x1x1 is too long for a 20x20x20 bag (Max+Min = 41 > 20): no suitable packaging",
+      "ru": "Предмет 40x1x1 слишком длинный для пакета 20x20x20 (Max+Min = 41 > 20): подходящей упаковки нет"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 40,
+        "width": 1,
+        "thickness": 1
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Bag-Small",
+        "cost": 1,
+        "available": true,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "NONE"
+    },
+    "id": "PK-21.1"
+  },
+  {
+    "group": "CHOICE",
+    "ref": [
+      "PK-22"
+    ],
+    "technique": "EP + DT",
+    "priority": "High",
+    "title": {
+      "en": "Three suitable options (7, 3, 5): the cheapest (3) is chosen, it is neither first nor last in the list",
+      "ru": "Три подходящих варианта (7, 3, 5): выбирается самый дешёвый (3), он не первый и не последний в списке"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-A",
+        "cost": 7,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      },
+      {
+        "name": "Box-B",
+        "cost": 3,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      },
+      {
+        "name": "Bag-C",
+        "cost": 5,
+        "available": true,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          12,
+          8,
+          1
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-B"
+    },
+    "id": "PK-22.1"
+  },
+  {
+    "group": "CHOICE",
+    "ref": [
+      "PK-23"
+    ],
+    "technique": "DT",
+    "priority": "High",
+    "title": {
+      "en": "Cheapest option is too small: the next cheapest suitable one is chosen",
+      "ru": "Самый дешёвый вариант слишком мал: выбирается следующий по цене подходящий"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Tiny",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          5,
+          5,
+          5
+        ]
+      },
+      {
+        "name": "Box-Ok",
+        "cost": 2,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      },
+      {
+        "name": "Box-Big",
+        "cost": 3,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          30,
+          30,
+          30
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Ok"
+    },
+    "id": "PK-23.1"
+  },
+  {
+    "group": "CHOICE",
+    "ref": [
+      "PK-23"
+    ],
+    "technique": "DT",
+    "priority": "High",
+    "title": {
+      "en": "Cheapest option cannot carry the weight (4 kg > 3 kg): the next cheapest suitable one is chosen",
+      "ru": "Самый дешёвый вариант не выдерживает вес (4 кг > 3 кг): выбирается следующий подходящий"
+    },
+    "items": [
+      {
+        "weight": 4,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Weak",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 3,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      },
+      {
+        "name": "Box-Strong",
+        "cost": 2,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 10,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Strong"
+    },
+    "id": "PK-23.2"
+  },
+  {
+    "group": "CHOICE",
+    "ref": [
+      "PK-24"
+    ],
+    "technique": "DT",
+    "priority": "Medium",
+    "title": {
+      "en": "Bag is cheaper than a box and both fit: the bag is chosen",
+      "ru": "Пакет дешевле коробки и оба подходят: выбирается пакет"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Bag-Cheap",
+        "cost": 1,
+        "available": true,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          12,
+          8,
+          1
+        ]
+      },
+      {
+        "name": "Box-Pricey",
+        "cost": 2,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Bag-Cheap"
+    },
+    "id": "PK-24.1"
+  },
+  {
+    "group": "CHOICE",
+    "ref": [
+      "PK-24"
+    ],
+    "technique": "DT",
+    "priority": "Medium",
+    "title": {
+      "en": "Box is cheaper than a bag and both fit: the box is chosen",
+      "ru": "Коробка дешевле пакета и оба подходят: выбирается коробка"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Cheap",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      },
+      {
+        "name": "Bag-Pricey",
+        "cost": 2,
+        "available": true,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          12,
+          8,
+          1
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Cheap"
+    },
+    "id": "PK-24.2"
+  },
+  {
+    "group": "CHOICE",
+    "ref": [
+      "PK-25"
+    ],
+    "technique": "EG",
+    "priority": "Medium",
+    "title": {
+      "en": "Two suitable options with the same price: the one with the alphabetically first name wins",
+      "ru": "Два подходящих варианта с одинаковой ценой: побеждает вариант с именем первым по алфавиту"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Beta",
+        "cost": 4,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      },
+      {
+        "name": "Box-Alpha",
+        "cost": 4,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Alpha"
+    },
+    "id": "PK-25.1"
+  },
+  {
+    "group": "CHOICE",
+    "ref": [
+      "PK-26"
+    ],
+    "technique": "EP",
+    "priority": "Medium",
+    "title": {
+      "en": "Exactly one packaging suits the shipment: it is suggested",
+      "ru": "Ровно одна упаковка подходит для отправления: она и предлагается"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Fits",
+        "cost": 5,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      },
+      {
+        "name": "Box-TooSmall",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          5,
+          5,
+          5
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Fits"
+    },
+    "id": "PK-26.1"
+  },
+  {
+    "group": "CHOICE",
+    "ref": [
+      "PK-26"
+    ],
+    "technique": "EP",
+    "priority": "Medium",
+    "title": {
+      "en": "Nothing suits a 50x50x50 item: no suitable packaging",
+      "ru": "Для предмета 50x50x50 ничего не подходит: подходящей упаковки нет"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 50,
+        "width": 50,
+        "thickness": 50
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Medium",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      },
+      {
+        "name": "Bag-Medium",
+        "cost": 2,
+        "available": true,
+        "type": "BAG",
+        "maxWeight": 5,
+        "dimensions": [
+          30,
+          30,
+          30
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "NONE"
+    },
+    "id": "PK-26.2"
+  },
+  {
+    "group": "CHOICE",
+    "ref": [
+      "PK-27"
+    ],
+    "technique": "BVA",
+    "priority": "Low",
+    "title": {
+      "en": "Zero-cost packaging is valid and is the cheapest (0 < 0.01)",
+      "ru": "Упаковка с нулевой стоимостью допустима и является самой дешёвой (0 < 0.01)"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Free",
+        "cost": 0,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      },
+      {
+        "name": "Box-Paid",
+        "cost": 0.01,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "PACKAGING",
+      "packaging": "Box-Free"
+    },
+    "id": "PK-27.1"
+  },
+  {
+    "group": "INVALID",
+    "ref": [
+      "PK-28"
+    ],
+    "technique": "EG + BVA",
+    "priority": "Medium",
+    "title": {
+      "en": "Empty item list (0 items): input rejected",
+      "ru": "Пустой список предметов (0 предметов): ввод отклоняется"
+    },
+    "items": [],
+    "packagings": [
+      {
+        "name": "Box-Ok",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "INVALID_INPUT"
+    },
+    "id": "PK-28.1"
+  },
+  {
+    "group": "INVALID",
+    "ref": [
+      "PK-29"
+    ],
+    "technique": "BVA",
+    "priority": "Medium",
+    "title": {
+      "en": "Item weight 0: input rejected",
+      "ru": "Вес предмета 0: ввод отклоняется"
+    },
+    "items": [
+      {
+        "weight": 0,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Ok",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "INVALID_INPUT"
+    },
+    "id": "PK-29.1"
+  },
+  {
+    "group": "INVALID",
+    "ref": [
+      "PK-29"
+    ],
+    "technique": "BVA",
+    "priority": "Medium",
+    "title": {
+      "en": "Item thickness -1: input rejected",
+      "ru": "Толщина предмета -1: ввод отклоняется"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": -1
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Ok",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "INVALID_INPUT"
+    },
+    "id": "PK-29.2"
+  },
+  {
+    "group": "INVALID",
+    "ref": [
+      "PK-29"
+    ],
+    "technique": "BVA",
+    "priority": "Medium",
+    "title": {
+      "en": "Item length 0: input rejected",
+      "ru": "Длина предмета 0: ввод отклоняется"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 0,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Ok",
+        "cost": 1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "INVALID_INPUT"
+    },
+    "id": "PK-29.3"
+  },
+  {
+    "group": "INVALID",
+    "ref": [
+      "PK-30"
+    ],
+    "technique": "EG",
+    "priority": "Low",
+    "title": {
+      "en": "Packaging with negative cost in the catalog: input rejected",
+      "ru": "Упаковка с отрицательной стоимостью в каталоге: ввод отклоняется"
+    },
+    "items": [
+      {
+        "weight": 1,
+        "length": 10,
+        "width": 6,
+        "thickness": 2
+      }
+    ],
+    "packagings": [
+      {
+        "name": "Box-Broken",
+        "cost": -1,
+        "available": true,
+        "type": "BOX",
+        "maxWeight": 5,
+        "dimensions": [
+          20,
+          20,
+          20
+        ]
+      }
+    ],
+    "expected": {
+      "outcome": "INVALID_INPUT"
+    },
+    "id": "PK-30.1"
+  }
+]

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 586" width="672" height="586" role="img" aria-label="The bag as a tube and the item wrap in halves">
+<style>
+  .bg { fill: #ffffff; stroke: #d0d7de; stroke-width: 1; }
+  .nd { fill: #eef3f9; stroke: #5b7fa6; stroke-width: 1.5; }
+  .dm { fill: #fff6d6; stroke: #c9a227; stroke-width: 1.5; }
+  .ok { fill: #d9f2e6; stroke: #2f9e73; stroke-width: 1.5; }
+  .no { fill: #fde2e2; stroke: #d9534f; stroke-width: 1.5; }
+  .ar { stroke: #445; stroke-width: 1.5; fill: none; }
+  text { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+  .t  { font-size: 12px; text-anchor: middle; dominant-baseline: middle; fill: #1a1a1a; }
+  .ts { font-size: 10.5px; text-anchor: middle; dominant-baseline: middle; fill: #555; }
+  .tb { font-size: 12px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; fill: #1a1a1a; }
+  .lb { font-size: 11px; font-weight: bold; fill: #444; dominant-baseline: middle; }
+  .h  { font-size: 15px; font-weight: bold; fill: #1f3864; }
+</style>
+<rect class="bg" x="0.5" y="0.5" width="671" height="585" rx="12"/>
+<text class="h" x="20" y="28">Diagram 4 · Why we “divide by 2”</text>
+<g transform="translate(16,50)">
+  <text class="lb" x="20" y="16">1. A flat bag is like a T-shirt sleeve lying on a table</text>
+  <path d="M80,50 V44 M320,50 V44 M80,47 H320" stroke="#444" fill="none"/>
+  <text class="ts" x="200" y="36">width W = 8</text>
+  <line x1="80" y1="62" x2="320" y2="62" stroke="#f6a840" stroke-width="9"/>
+  <line x1="80" y1="78" x2="320" y2="78" stroke="#d97706" stroke-width="9"/>
+  <line x1="80" y1="57" x2="80" y2="83" stroke="#333" stroke-width="4"/>
+  <line x1="320" y1="57" x2="320" y2="83" stroke="#333" stroke-width="4"/>
+  <text class="ts" style="text-anchor:start" x="334" y="62">top side: 8</text>
+  <text class="ts" style="text-anchor:start" x="334" y="79">bottom side: 8</text>
+  <text class="t" x="320" y="108">On the table you only see the width W = 8, but the bag has two sides: top and bottom.</text>
+
+  <text class="lb" x="20" y="146">2. Open the bag - it becomes a tube; the line around it (girth) = 8 + 8 = 16</text>
+  <path d="M100,225 A50,50 0 0 1 200,225" fill="none" stroke="#f6a840" stroke-width="10"/>
+  <path d="M100,225 A50,50 0 0 0 200,225" fill="none" stroke="#d97706" stroke-width="10"/>
+  <text class="tb" x="150" y="225">girth 16</text>
+  <text class="ts" x="150" y="166">top side = 8</text>
+  <text class="ts" x="150" y="288">bottom side = 8</text>
+  <text class="t" style="text-anchor:start" x="260" y="190">The whole ring is the top side</text>
+  <text class="t" style="text-anchor:start" x="260" y="210">plus the bottom one: W + W = 2W = 16.</text>
+  <text class="t" style="text-anchor:start" x="260" y="240">Like a T-shirt sleeve: 20 cm wide on</text>
+  <text class="t" style="text-anchor:start" x="260" y="260">the table, but 40 cm around the arm.</text>
+
+  <text class="lb" x="20" y="316">3. The wrap around the item also splits into two equal halves</text>
+  <rect x="60" y="354" width="180" height="60" fill="#cfe2f7"/>
+  <text class="t" x="150" y="384">section 6 × 2</text>
+  <path d="M60,384 V354 H240 V384" fill="none" stroke="#f6a840" stroke-width="8" stroke-linejoin="round"/>
+  <path d="M60,384 V414 H240 V384" fill="none" stroke="#d97706" stroke-width="8" stroke-linejoin="round"/>
+  <text class="ts" x="150" y="340">top half: 1 + 6 + 1 = 8 = Mid + Min</text>
+  <text class="ts" x="150" y="434">bottom half: 1 + 6 + 1 = 8</text>
+  <text class="t" style="text-anchor:start" x="290" y="362">The whole wrap: 8 + 8 = 16.</text>
+  <text class="t" style="text-anchor:start" x="290" y="384">The top side of the bag must cover</text>
+  <text class="t" style="text-anchor:start" x="290" y="404">the top half of the wrap: W ≥ 8.</text>
+  <text class="t" style="text-anchor:start" x="290" y="424">Same for the bottom side.</text>
+
+  <rect x="20" y="448" width="600" height="62" rx="6" fill="#fff9e6" stroke="#ecd98a"/>
+  <text class="t" x="320" y="466">Two equal bag sides (8 + 8) against two equal halves of the wrap (8 + 8):</text>
+  <text class="tb" style="font-size:14px" x="320" y="490">comparing one with one is enough: W ≥ Mid + Min   (8 ≥ 8 ✓)</text>
+</g>
+</svg>

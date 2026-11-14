@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 506" width="672" height="506" role="img" aria-label="Why Min is added to the bag length and width">
+<style>
+  .bg { fill: #ffffff; stroke: #d0d7de; stroke-width: 1; }
+  .nd { fill: #eef3f9; stroke: #5b7fa6; stroke-width: 1.5; }
+  .dm { fill: #fff6d6; stroke: #c9a227; stroke-width: 1.5; }
+  .ok { fill: #d9f2e6; stroke: #2f9e73; stroke-width: 1.5; }
+  .no { fill: #fde2e2; stroke: #d9534f; stroke-width: 1.5; }
+  .ar { stroke: #445; stroke-width: 1.5; fill: none; }
+  text { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+  .t  { font-size: 12px; text-anchor: middle; dominant-baseline: middle; fill: #1a1a1a; }
+  .ts { font-size: 10.5px; text-anchor: middle; dominant-baseline: middle; fill: #555; }
+  .tb { font-size: 12px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; fill: #1a1a1a; }
+  .lb { font-size: 11px; font-weight: bold; fill: #444; dominant-baseline: middle; }
+  .h  { font-size: 15px; font-weight: bold; fill: #1f3864; }
+</style>
+<rect class="bg" x="0.5" y="0.5" width="671" height="505" rx="12"/>
+<text class="h" x="20" y="28">Diagram 5 · The film wraps around the thickness, so Min is added</text>
+<g transform="translate(16,50)">
+  <text class="lb" x="20" y="16">1. Side view: the bag cut along its length (item 10 × 6 × 2)</text>
+
+  <path d="M120,60 V46 M520,60 V46 M120,53 H520" stroke="#444" fill="none"/>
+  <text class="t" x="320" y="36">Max = 10 (the film runs over the top of the item)</text>
+
+  <rect x="120" y="70" width="400" height="80" fill="#cfe2f7" stroke="#4a90d9" stroke-width="1.5"/>
+  <text class="tb" x="320" y="102">Item</text>
+  <text class="t" x="320" y="122">length Max = 10, thickness Min = 2</text>
+
+  <path d="M120,110 V70 H520 V110" fill="none" stroke="#f0a030" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M120,110 V150 H520 V110" fill="none" stroke="#f0a030" stroke-width="5" stroke-linejoin="round"/>
+
+  <line x1="82" y1="110" x2="120" y2="110" stroke="#333" stroke-width="6"/>
+  <line x1="520" y1="110" x2="558" y2="110" stroke="#333" stroke-width="6"/>
+  <text class="ts" x="100" y="128">seam</text>
+  <text class="ts" x="540" y="128">seam</text>
+  <text class="ts" style="text-anchor:end" x="112" y="78">Min/2 = 1</text>
+  <text class="ts" style="text-anchor:start" x="528" y="78">Min/2 = 1</text>
+
+  <text class="ts" x="320" y="168">The top film goes: up the end (Min/2) → over the top (Max) → down the other end (Min/2) to the seam.</text>
+  <text class="ts" x="320" y="183">The bottom side does the same. The orange line is the film.</text>
+
+  <text class="lb" x="20" y="212">2. Unroll the film of one side into a straight strip</text>
+  <rect x="80" y="224" width="40" height="28" fill="#f0a030"/>
+  <rect x="120" y="224" width="400" height="28" fill="#4a90d9"/>
+  <rect x="520" y="224" width="40" height="28" fill="#f0a030"/>
+  <text class="t" style="fill:#fff" x="100" y="238">1</text>
+  <text class="t" style="fill:#fff" x="320" y="238">Max = 10</text>
+  <text class="t" style="fill:#fff" x="540" y="238">1</text>
+  <path d="M80,260 V268 H560 V260" stroke="#444" fill="none"/>
+  <text class="tb" x="320" y="282">film needed: Max + Min = 10 + 2 = 12</text>
+  <rect x="80" y="294" width="480" height="26" fill="#e4e8ee" stroke="#8794a6"/>
+  <text class="t" x="320" y="307">bag length = 12 → 12 ≤ 12: just enough film ✓</text>
+
+  <text class="lb" x="20" y="352">3. The same across (bag seen from the end): Mid instead of Max</text>
+  <rect x="80" y="364" width="40" height="26" fill="#f0a030"/>
+  <rect x="120" y="364" width="240" height="26" fill="#4a90d9"/>
+  <rect x="360" y="364" width="40" height="26" fill="#f0a030"/>
+  <text class="t" style="fill:#fff" x="100" y="377">1</text>
+  <text class="t" style="fill:#fff" x="240" y="377">Mid = 6</text>
+  <text class="t" style="fill:#fff" x="380" y="377">1</text>
+  <text class="tb" style="text-anchor:start" x="414" y="377">Mid + Min = 6 + 2 = 8</text>
+  <rect x="80" y="398" width="320" height="26" fill="#e4e8ee" stroke="#8794a6"/>
+  <text class="t" x="240" y="411">bag width = 8 → 8 ≤ 8 ✓</text>
+</g>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 672 466" width="672" height="466" role="img" aria-label="Bag check">
+<style>
+  .bg { fill: #ffffff; stroke: #d0d7de; stroke-width: 1; }
+  .nd { fill: #eef3f9; stroke: #5b7fa6; stroke-width: 1.5; }
+  .dm { fill: #fff6d6; stroke: #c9a227; stroke-width: 1.5; }
+  .ok { fill: #d9f2e6; stroke: #2f9e73; stroke-width: 1.5; }
+  .no { fill: #fde2e2; stroke: #d9534f; stroke-width: 1.5; }
+  .ar { stroke: #445; stroke-width: 1.5; fill: none; }
+  text { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+  .t  { font-size: 12px; text-anchor: middle; dominant-baseline: middle; fill: #1a1a1a; }
+  .ts { font-size: 10.5px; text-anchor: middle; dominant-baseline: middle; fill: #555; }
+  .tb { font-size: 12px; font-weight: bold; text-anchor: middle; dominant-baseline: middle; fill: #1a1a1a; }
+  .lb { font-size: 11px; font-weight: bold; fill: #444; dominant-baseline: middle; }
+  .h  { font-size: 15px; font-weight: bold; fill: #1f3864; }
+</style>
+<rect class="bg" x="0.5" y="0.5" width="671" height="465" rx="12"/>
+<text class="h" x="20" y="28">Diagram 6 · Bag check: two sums, both must hold</text>
+<g transform="translate(16,50)">
+  <defs><marker id="a3" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#445"/></marker></defs>
+
+  <rect class="nd" x="60" y="10" width="340" height="44" rx="8"/>
+  <text class="t" x="230" y="26">Shipment dimensions, descending:</text>
+  <text class="t" x="230" y="43">Max ≥ Mid ≥ Min</text>
+  <line class="ar" x1="230" y1="54" x2="230" y2="73" marker-end="url(#a3)"/>
+
+  <rect class="nd" x="60" y="74" width="340" height="58" rx="8"/>
+  <text class="t" x="230" y="91">Bag dimensions, descending:</text>
+  <text class="t" x="230" y="108">length ≥ width ≥ thickness</text>
+  <text class="ts" x="230" y="123">(bag thickness is not used by the check)</text>
+  <line class="ar" x1="230" y1="132" x2="230" y2="171" marker-end="url(#a3)"/>
+
+  <polygon class="dm" points="230,172 350,200 230,228 110,200"/>
+  <text class="tb" x="230" y="200">Max + Min ≤ length ?</text>
+  <line class="ar" x1="230" y1="228" x2="230" y2="261" marker-end="url(#a3)"/>
+  <text class="lb" x="240" y="248" fill="#1f8a5b">Yes</text>
+
+  <polygon class="dm" points="230,262 350,290 230,318 110,290"/>
+  <text class="tb" x="230" y="290">Mid + Min ≤ width ?</text>
+  <line class="ar" x1="230" y1="318" x2="230" y2="339" marker-end="url(#a3)"/>
+  <text class="lb" x="240" y="331" fill="#1f8a5b">Yes</text>
+
+  <rect class="ok" x="60" y="340" width="340" height="44" rx="22"/>
+  <text class="tb" x="230" y="362">Bag fits</text>
+
+  <rect class="no" x="430" y="215" width="190" height="60" rx="8"/>
+  <text class="tb" x="525" y="235">Bag does not fit</text>
+  <text class="ts" x="525" y="255">(at least one condition failed)</text>
+  <path class="ar" d="M350,200 H525 V213" marker-end="url(#a3)"/>
+  <path class="ar" d="M350,290 H525 V277" marker-end="url(#a3)"/>
+  <text class="lb" x="357" y="193" fill="#c0392b">No</text>
+  <text class="lb" x="357" y="283" fill="#c0392b">No</text>
+</g>
+</svg>

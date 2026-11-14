@@ -1,0 +1,975 @@
+[
+  {
+    "group": "HAPPY",
+    "ref": [
+      "PC-01"
+    ],
+    "technique": "EP",
+    "priority": "High",
+    "title": {
+      "en": "SAVE10 (10 %) on one physical item of 50.00: discount 5.00, free shipping, total 45.00",
+      "ru": "SAVE10 (10 %) на один физический товар за 50.00: скидка 5.00, бесплатная доставка, итого 45.00"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "50.00",
+      "discount": "5.00",
+      "shipping": "0.00",
+      "total": "45.00"
+    },
+    "id": "PC-01.1"
+  },
+  {
+    "group": "HAPPY",
+    "ref": [
+      "PC-02"
+    ],
+    "technique": "EP",
+    "priority": "High",
+    "title": {
+      "en": "FLAT5 (fixed 5.00) on a 50.00 cart: discount 5.00, total 45.00",
+      "ru": "FLAT5 (фиксированные 5.00) на корзину 50.00: скидка 5.00, итого 45.00"
+    },
+    "body": "{\"promo_code\": \"FLAT5\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "50.00",
+      "discount": "5.00",
+      "shipping": "0.00",
+      "total": "45.00"
+    },
+    "id": "PC-02.1"
+  },
+  {
+    "group": "HAPPY",
+    "ref": [
+      "PC-03"
+    ],
+    "technique": "EP",
+    "priority": "High",
+    "title": {
+      "en": "Quantity multiplies the price: 2 x 20.00 = 40.00, discount 4.00",
+      "ru": "Количество умножается на цену: 2 x 20.00 = 40.00, скидка 4.00"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 2, \"price\": 20.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "40.00",
+      "discount": "4.00",
+      "shipping": "0.00",
+      "total": "36.00"
+    },
+    "id": "PC-03.1"
+  },
+  {
+    "group": "HAPPY",
+    "ref": [
+      "PC-03"
+    ],
+    "technique": "EP + Pairwise",
+    "priority": "Medium",
+    "title": {
+      "en": "Several lines of different types: physical 20.00 + digital 30.00, discount 10 % of 50.00",
+      "ru": "Несколько позиций разных типов: физический 20.00 + цифровой 30.00, скидка 10 % от 50.00"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 20.00}, {\"product_id\": \"SKU-2\", \"product_type\": \"digital\", \"count\": 1, \"price\": 30.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "50.00",
+      "discount": "5.00",
+      "shipping": "0.00",
+      "total": "45.00"
+    },
+    "id": "PC-03.2"
+  },
+  {
+    "group": "HAPPY",
+    "ref": [
+      "PC-04",
+      "PC-16"
+    ],
+    "technique": "BVA + EG",
+    "priority": "High",
+    "title": {
+      "en": "Rounding: 10 % of 10.05 = 1.005 is rounded half-up to 1.01; shipping 4.99 is added after the discount",
+      "ru": "Округление: 10 % от 10.05 = 1.005 округляется половина вверх до 1.01; доставка 4.99 добавляется после скидки"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 10.05}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "10.05",
+      "discount": "1.01",
+      "shipping": "4.99",
+      "total": "14.03"
+    },
+    "id": "PC-04.1"
+  },
+  {
+    "group": "HAPPY",
+    "ref": [
+      "PC-04",
+      "PC-26"
+    ],
+    "technique": "BVA",
+    "priority": "Medium",
+    "title": {
+      "en": "Smallest price 0.01: 10 % = 0.001 rounds to 0.00, shipping 4.99",
+      "ru": "Минимальная цена 0.01: 10 % = 0.001 округляется до 0.00, доставка 4.99"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 0.01}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "0.01",
+      "discount": "0.00",
+      "shipping": "4.99",
+      "total": "5.00"
+    },
+    "id": "PC-04.2"
+  },
+  {
+    "group": "HAPPY",
+    "ref": [
+      "PC-05"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "FLAT5 on a 3.00 cart: discount is capped at 3.00, total = shipping 4.99 (never negative)",
+      "ru": "FLAT5 на корзину 3.00: скидка ограничена 3.00, итого = доставка 4.99 (не уходит в минус)"
+    },
+    "body": "{\"promo_code\": \"FLAT5\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 3.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "3.00",
+      "discount": "3.00",
+      "shipping": "4.99",
+      "total": "4.99"
+    },
+    "id": "PC-05.1"
+  },
+  {
+    "group": "GIFT",
+    "ref": [
+      "PC-06"
+    ],
+    "technique": "DT",
+    "priority": "High",
+    "title": {
+      "en": "Mixed cart: physical 40.00 + gift card 50.00 - discount only from the physical part (4.00), subtotal 90.00",
+      "ru": "Смешанная корзина: физический 40.00 + подарочная карта 50.00 - скидка только с физической части (4.00), подытог 90.00"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 40.00}, {\"product_id\": \"SKU-2\", \"product_type\": \"gift_card\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "90.00",
+      "discount": "4.00",
+      "shipping": "0.00",
+      "total": "86.00"
+    },
+    "id": "PC-06.1"
+  },
+  {
+    "group": "GIFT",
+    "ref": [
+      "PC-07"
+    ],
+    "technique": "DT",
+    "priority": "High",
+    "title": {
+      "en": "Cart with a gift card only: promo code is not applicable (error, no amounts)",
+      "ru": "Корзина только из подарочной карты: промокод не применим (ошибка, без сумм)"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"gift_card\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Promo code is not applicable to the items in the cart"
+    },
+    "id": "PC-07.1"
+  },
+  {
+    "group": "GIFT",
+    "ref": [
+      "PC-08",
+      "PC-15"
+    ],
+    "technique": "DT + Pairwise",
+    "priority": "Medium",
+    "title": {
+      "en": "Digital 20.00 + gift card 10.00: discount only on the digital part (2.00); not 'digital only', so shipping 4.99",
+      "ru": "Цифровой 20.00 + подарочная карта 10.00: скидка только с цифровой части (2.00); это не «только цифровые», поэтому доставка 4.99"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"digital\", \"count\": 1, \"price\": 20.00}, {\"product_id\": \"SKU-2\", \"product_type\": \"gift_card\", \"count\": 1, \"price\": 10.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "30.00",
+      "discount": "2.00",
+      "shipping": "4.99",
+      "total": "32.99"
+    },
+    "id": "PC-08.1"
+  },
+  {
+    "group": "GIFT",
+    "ref": [
+      "PC-09",
+      "PC-02"
+    ],
+    "technique": "DT + Pairwise",
+    "priority": "High",
+    "title": {
+      "en": "FLAT5 on physical 10.00 + gift card 30.00: full 5.00 discount, subtotal 40.00",
+      "ru": "FLAT5 на физический 10.00 + подарочная карта 30.00: полная скидка 5.00, подытог 40.00"
+    },
+    "body": "{\"promo_code\": \"FLAT5\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 10.00}, {\"product_id\": \"SKU-2\", \"product_type\": \"gift_card\", \"count\": 1, \"price\": 30.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "40.00",
+      "discount": "5.00",
+      "shipping": "0.00",
+      "total": "35.00"
+    },
+    "id": "PC-09.1"
+  },
+  {
+    "group": "GIFT",
+    "ref": [
+      "PC-09"
+    ],
+    "technique": "BVA + DT",
+    "priority": "High",
+    "title": {
+      "en": "FLAT5 on physical 3.00 + gift card 40.00: discount is capped at the discountable 3.00 (not 5.00)",
+      "ru": "FLAT5 на физический 3.00 + подарочная карта 40.00: скидка ограничена облагаемой частью 3.00 (а не 5.00)"
+    },
+    "body": "{\"promo_code\": \"FLAT5\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 3.00}, {\"product_id\": \"SKU-2\", \"product_type\": \"gift_card\", \"count\": 1, \"price\": 40.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "43.00",
+      "discount": "3.00",
+      "shipping": "0.00",
+      "total": "40.00"
+    },
+    "id": "PC-09.2"
+  },
+  {
+    "group": "SHIP",
+    "ref": [
+      "PC-10",
+      "PC-16"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "Subtotal 34.99 (just below the threshold): shipping 4.99",
+      "ru": "Подытог 34.99 (чуть ниже порога): доставка 4.99"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 34.99}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "34.99",
+      "discount": "3.50",
+      "shipping": "4.99",
+      "total": "36.48"
+    },
+    "id": "PC-10.1"
+  },
+  {
+    "group": "SHIP",
+    "ref": [
+      "PC-10",
+      "PC-11"
+    ],
+    "technique": "BVA + DT",
+    "priority": "High",
+    "title": {
+      "en": "Subtotal exactly 35.00: free shipping, although the discounted amount (31.50) is below 35",
+      "ru": "Подытог ровно 35.00: доставка бесплатна, хотя сумма после скидки (31.50) ниже 35"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 35.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "35.00",
+      "discount": "3.50",
+      "shipping": "0.00",
+      "total": "31.50"
+    },
+    "id": "PC-10.2"
+  },
+  {
+    "group": "SHIP",
+    "ref": [
+      "PC-10"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "Subtotal 35.01 (just above the threshold): free shipping",
+      "ru": "Подытог 35.01 (чуть выше порога): доставка бесплатна"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 35.01}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "35.01",
+      "discount": "3.50",
+      "shipping": "0.00",
+      "total": "31.51"
+    },
+    "id": "PC-10.3"
+  },
+  {
+    "group": "SHIP",
+    "ref": [
+      "PC-11"
+    ],
+    "technique": "DT",
+    "priority": "High",
+    "title": {
+      "en": "FLAT5 on 36.00: subtotal passes the threshold, the discounted 31.00 does not matter - free shipping",
+      "ru": "FLAT5 на 36.00: подытог проходит порог, сумма после скидки 31.00 значения не имеет - доставка бесплатна"
+    },
+    "body": "{\"promo_code\": \"FLAT5\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 36.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "36.00",
+      "discount": "5.00",
+      "shipping": "0.00",
+      "total": "31.00"
+    },
+    "id": "PC-11.1"
+  },
+  {
+    "group": "SHIP",
+    "ref": [
+      "PC-12"
+    ],
+    "technique": "DT",
+    "priority": "High",
+    "title": {
+      "en": "Digital-only cart of 10.00 (below the threshold): no shipping",
+      "ru": "Корзина только из цифровых товаров на 10.00 (ниже порога): доставки нет"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"digital\", \"count\": 1, \"price\": 10.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "10.00",
+      "discount": "1.00",
+      "shipping": "0.00",
+      "total": "9.00"
+    },
+    "id": "PC-12.1"
+  },
+  {
+    "group": "SHIP",
+    "ref": [
+      "PC-13"
+    ],
+    "technique": "DT + Pairwise",
+    "priority": "Medium",
+    "title": {
+      "en": "Physical 10.00 + digital 10.00 (below the threshold): shipping 4.99 is charged",
+      "ru": "Физический 10.00 + цифровой 10.00 (ниже порога): доставка 4.99 взимается"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 10.00}, {\"product_id\": \"SKU-2\", \"product_type\": \"digital\", \"count\": 1, \"price\": 10.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "20.00",
+      "discount": "2.00",
+      "shipping": "4.99",
+      "total": "22.99"
+    },
+    "id": "PC-13.1"
+  },
+  {
+    "group": "SHIP",
+    "ref": [
+      "PC-14"
+    ],
+    "technique": "DT + Pairwise",
+    "priority": "Medium",
+    "title": {
+      "en": "Physical 10.00 + gift card 30.00: the gift card counts towards the threshold (subtotal 40.00), free shipping",
+      "ru": "Физический 10.00 + подарочная карта 30.00: карта учитывается в пороге (подытог 40.00), доставка бесплатна"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 10.00}, {\"product_id\": \"SKU-2\", \"product_type\": \"gift_card\", \"count\": 1, \"price\": 30.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "40.00",
+      "discount": "1.00",
+      "shipping": "0.00",
+      "total": "39.00"
+    },
+    "id": "PC-14.1"
+  },
+  {
+    "group": "CODE",
+    "ref": [
+      "PC-17",
+      "PC-23"
+    ],
+    "technique": "EP",
+    "priority": "High",
+    "title": {
+      "en": "Unknown promo code: error, no amounts",
+      "ru": "Несуществующий промокод: ошибка, без сумм"
+    },
+    "body": "{\"promo_code\": \"NOPE\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Promo code is invalid"
+    },
+    "id": "PC-17.1"
+  },
+  {
+    "group": "CODE",
+    "ref": [
+      "PC-18",
+      "PC-23"
+    ],
+    "technique": "EP",
+    "priority": "High",
+    "title": {
+      "en": "Expired promo code (EXPIRED20): error",
+      "ru": "Просроченный промокод (EXPIRED20): ошибка"
+    },
+    "body": "{\"promo_code\": \"EXPIRED20\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Promo code has expired"
+    },
+    "id": "PC-18.1"
+  },
+  {
+    "group": "CODE",
+    "ref": [
+      "PC-19",
+      "PC-23"
+    ],
+    "technique": "EP",
+    "priority": "High",
+    "title": {
+      "en": "Promo code with the usage limit reached (USEDUP): error",
+      "ru": "Промокод с исчерпанным лимитом использований (USEDUP): ошибка"
+    },
+    "body": "{\"promo_code\": \"USEDUP\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Promo code usage limit has been reached"
+    },
+    "id": "PC-19.1"
+  },
+  {
+    "group": "CODE",
+    "ref": [
+      "PC-20"
+    ],
+    "technique": "BVA + EG",
+    "priority": "High",
+    "title": {
+      "en": "Empty promo_code (\"\"): 'required' error",
+      "ru": "Пустой promo_code (\"\"): ошибка «обязателен»"
+    },
+    "body": "{\"promo_code\": \"\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Promo code is required"
+    },
+    "id": "PC-20.1"
+  },
+  {
+    "group": "CODE",
+    "ref": [
+      "PC-20"
+    ],
+    "technique": "EG",
+    "priority": "High",
+    "title": {
+      "en": "Blank promo_code (only spaces): 'required' error",
+      "ru": "promo_code из одних пробелов: ошибка «обязателен»"
+    },
+    "body": "{\"promo_code\": \"   \", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Promo code is required"
+    },
+    "id": "PC-20.2"
+  },
+  {
+    "group": "CODE",
+    "ref": [
+      "PC-20"
+    ],
+    "technique": "EG",
+    "priority": "Medium",
+    "title": {
+      "en": "promo_code is null: 'required' error",
+      "ru": "promo_code равен null: ошибка «обязателен»"
+    },
+    "body": "{\"promo_code\": null, \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Promo code is required"
+    },
+    "id": "PC-20.3"
+  },
+  {
+    "group": "CODE",
+    "ref": [
+      "PC-20"
+    ],
+    "technique": "EG",
+    "priority": "Medium",
+    "title": {
+      "en": "promo_code field omitted: 'required' error",
+      "ru": "Поле promo_code отсутствует: ошибка «обязателен»"
+    },
+    "body": "{\"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Promo code is required"
+    },
+    "id": "PC-20.4"
+  },
+  {
+    "group": "CODE",
+    "ref": [
+      "PC-21"
+    ],
+    "technique": "EP + EG",
+    "priority": "Medium",
+    "title": {
+      "en": "Code with surrounding spaces and lower case (' save10 ') works like SAVE10",
+      "ru": "Код с пробелами по краям и в нижнем регистре (' save10 ') работает как SAVE10"
+    },
+    "body": "{\"promo_code\": \" save10 \", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "50.00",
+      "discount": "5.00",
+      "shipping": "0.00",
+      "total": "45.00"
+    },
+    "id": "PC-21.1"
+  },
+  {
+    "group": "CODE",
+    "ref": [
+      "PC-21"
+    ],
+    "technique": "EP",
+    "priority": "Medium",
+    "title": {
+      "en": "Mixed-case code ('Save10') works like SAVE10",
+      "ru": "Код в смешанном регистре ('Save10') работает как SAVE10"
+    },
+    "body": "{\"promo_code\": \"Save10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "50.00",
+      "discount": "5.00",
+      "shipping": "0.00",
+      "total": "45.00"
+    },
+    "id": "PC-21.2"
+  },
+  {
+    "group": "CODE",
+    "ref": [
+      "PC-22"
+    ],
+    "technique": "EG",
+    "priority": "Medium",
+    "title": {
+      "en": "Injection-like code (SAVE10';--): rejected as invalid, no server error",
+      "ru": "Код, похожий на инъекцию (SAVE10';--): отклоняется как несуществующий, без ошибки сервера"
+    },
+    "body": "{\"promo_code\": \"SAVE10';--\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Promo code is invalid"
+    },
+    "id": "PC-22.1"
+  },
+  {
+    "group": "CODE",
+    "ref": [
+      "PC-22"
+    ],
+    "technique": "EG",
+    "priority": "Low",
+    "title": {
+      "en": "Code with an inner space ('SAVE 10'): invalid (only the outside is trimmed)",
+      "ru": "Код с пробелом внутри ('SAVE 10'): несуществующий (обрезаются только пробелы по краям)"
+    },
+    "body": "{\"promo_code\": \"SAVE 10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Promo code is invalid"
+    },
+    "id": "PC-22.2"
+  },
+  {
+    "group": "CODE",
+    "ref": [
+      "PC-22"
+    ],
+    "technique": "EG",
+    "priority": "Low",
+    "title": {
+      "en": "1000-character code: rejected as invalid, no server error",
+      "ru": "Код из 1000 символов: отклоняется как несуществующий, без ошибки сервера"
+    },
+    "body": "{\"promo_code\": \"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Promo code is invalid"
+    },
+    "id": "PC-22.3"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-24"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "Empty items list: error",
+      "ru": "Пустой список items: ошибка"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": []}",
+    "expected": {
+      "status": 400,
+      "message": "Cart must contain at least one item"
+    },
+    "id": "PC-24.1"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-25"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "count = 0: error",
+      "ru": "count = 0: ошибка"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 0, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Item count must be an integer between 1 and 999"
+    },
+    "id": "PC-25.1"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-25"
+    ],
+    "technique": "BVA + EG",
+    "priority": "Medium",
+    "title": {
+      "en": "count = -1: error",
+      "ru": "count = -1: ошибка"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": -1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Item count must be an integer between 1 and 999"
+    },
+    "id": "PC-25.2"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-25"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "count = 999 (upper boundary) is accepted",
+      "ru": "count = 999 (верхняя граница) принимается"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 999, \"price\": 1.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "999.00",
+      "discount": "99.90",
+      "shipping": "0.00",
+      "total": "899.10"
+    },
+    "id": "PC-25.3"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-25"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "count = 1000 (just above the boundary): error",
+      "ru": "count = 1000 (сразу выше границы): ошибка"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1000, \"price\": 1.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Item count must be an integer between 1 and 999"
+    },
+    "id": "PC-25.4"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-26"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "price = 0: error",
+      "ru": "price = 0: ошибка"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 0}]}",
+    "expected": {
+      "status": 400,
+      "message": "Item price must be between 0.01 and 9999.99 with at most 2 decimal places"
+    },
+    "id": "PC-26.1"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-26"
+    ],
+    "technique": "BVA + EG",
+    "priority": "Medium",
+    "title": {
+      "en": "price = -5.00: error",
+      "ru": "price = -5.00: ошибка"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": -5.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Item price must be between 0.01 and 9999.99 with at most 2 decimal places"
+    },
+    "id": "PC-26.2"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-26"
+    ],
+    "technique": "BVA + EG",
+    "priority": "Medium",
+    "title": {
+      "en": "price with three decimals (10.001): error",
+      "ru": "price с тремя знаками после запятой (10.001): ошибка"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 10.001}]}",
+    "expected": {
+      "status": 400,
+      "message": "Item price must be between 0.01 and 9999.99 with at most 2 decimal places"
+    },
+    "id": "PC-26.3"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-26"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "price = 9999.99 (upper boundary) is accepted; discount 999.999 rounds up to 1000.00",
+      "ru": "price = 9999.99 (верхняя граница) принимается; скидка 999.999 округляется вверх до 1000.00"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 9999.99}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "9999.99",
+      "discount": "1000.00",
+      "shipping": "0.00",
+      "total": "8999.99"
+    },
+    "id": "PC-26.4"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-26"
+    ],
+    "technique": "BVA",
+    "priority": "High",
+    "title": {
+      "en": "price = 10000.00 (just above the boundary): error",
+      "ru": "price = 10000.00 (сразу выше границы): ошибка"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 10000.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Item price must be between 0.01 and 9999.99 with at most 2 decimal places"
+    },
+    "id": "PC-26.5"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-27"
+    ],
+    "technique": "EP",
+    "priority": "Medium",
+    "title": {
+      "en": "Unknown product_type ('service'): error",
+      "ru": "Неизвестный product_type ('service'): ошибка"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"service\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Product type must be one of: physical, digital, gift_card"
+    },
+    "id": "PC-27.1"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-27"
+    ],
+    "technique": "EG",
+    "priority": "Medium",
+    "title": {
+      "en": "product_type in the wrong case ('Physical'): error",
+      "ru": "product_type в другом регистре ('Physical'): ошибка"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"Physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Product type must be one of: physical, digital, gift_card"
+    },
+    "id": "PC-27.2"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-28"
+    ],
+    "technique": "EP",
+    "priority": "Low",
+    "title": {
+      "en": "Blank product_id: error",
+      "ru": "Пустой product_id: ошибка"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"\", \"product_type\": \"physical\", \"count\": 1, \"price\": 50.00}]}",
+    "expected": {
+      "status": 400,
+      "message": "Product id is required"
+    },
+    "id": "PC-28.1"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-29"
+    ],
+    "technique": "EG",
+    "priority": "Low",
+    "title": {
+      "en": "Two lines with the same product_id are treated as separate lines (FLAT5 on 20.00 + 20.00)",
+      "ru": "Две строки с одинаковым product_id считаются отдельными позициями (FLAT5 на 20.00 + 20.00)"
+    },
+    "body": "{\"promo_code\": \"FLAT5\", \"items\": [{\"product_id\": \"A\", \"product_type\": \"physical\", \"count\": 1, \"price\": 20.00}, {\"product_id\": \"A\", \"product_type\": \"physical\", \"count\": 1, \"price\": 20.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "40.00",
+      "discount": "5.00",
+      "shipping": "0.00",
+      "total": "35.00"
+    },
+    "id": "PC-29.1"
+  },
+  {
+    "group": "HAPPY",
+    "ref": [
+      "PC-32"
+    ],
+    "technique": "EG",
+    "priority": "Low",
+    "title": {
+      "en": "Large cart: 100 physical lines of 1.00 (subtotal 100.00)",
+      "ru": "Большая корзина: 100 физических позиций по 1.00 (подытог 100.00)"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-2\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-3\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-4\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-5\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-6\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-7\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-8\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-9\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-10\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-11\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-12\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-13\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-14\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-15\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-16\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-17\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-18\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-19\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-20\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-21\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-22\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-23\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-24\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-25\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-26\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-27\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-28\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-29\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-30\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-31\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-32\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-33\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-34\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-35\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-36\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-37\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-38\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-39\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-40\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-41\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-42\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-43\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-44\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-45\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-46\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-47\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-48\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-49\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-50\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-51\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-52\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-53\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-54\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-55\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-56\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-57\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-58\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-59\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-60\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-61\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-62\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-63\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-64\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-65\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-66\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-67\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-68\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-69\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-70\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-71\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-72\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-73\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-74\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-75\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-76\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-77\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-78\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-79\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-80\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-81\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-82\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-83\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-84\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-85\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-86\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-87\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-88\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-89\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-90\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-91\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-92\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-93\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-94\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-95\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-96\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-97\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-98\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-99\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}, {\"product_id\": \"SKU-100\", \"product_type\": \"physical\", \"count\": 1, \"price\": 1.00}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "100.00",
+      "discount": "10.00",
+      "shipping": "0.00",
+      "total": "90.00"
+    },
+    "id": "PC-32.1"
+  },
+  {
+    "group": "HAPPY",
+    "ref": [
+      "PC-33"
+    ],
+    "technique": "EG",
+    "priority": "Medium",
+    "title": {
+      "en": "Decimal precision: 3 x 0.10 = 0.30 (not 0.30000000000000004), discount 0.03",
+      "ru": "Точность десятичных чисел: 3 x 0.10 = 0.30 (а не 0.30000000000000004), скидка 0.03"
+    },
+    "body": "{\"promo_code\": \"SAVE10\", \"items\": [{\"product_id\": \"SKU-1\", \"product_type\": \"physical\", \"count\": 3, \"price\": 0.10}]}",
+    "expected": {
+      "status": 200,
+      "message": "Promo code applied successfully",
+      "subtotal": "0.30",
+      "discount": "0.03",
+      "shipping": "4.99",
+      "total": "5.26"
+    },
+    "id": "PC-33.1"
+  },
+  {
+    "group": "ITEMS",
+    "ref": [
+      "PC-34"
+    ],
+    "technique": "EG",
+    "priority": "Low",
+    "title": {
+      "en": "Invalid cart and invalid code at once: the cart error is reported first",
+      "ru": "Некорректная корзина и некорректный код одновременно: сначала сообщается об ошибке корзины"
+    },
+    "body": "{\"promo_code\": \"NOPE\", \"items\": []}",
+    "expected": {
+      "status": 400,
+      "message": "Cart must contain at least one item"
+    },
+    "id": "PC-34.1"
+  }
+]
